@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Web site created using create-react-app"
+    />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+      <!-- Moralis SDK code -->
+      <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+      <script src="https://unpkg.com/moralis/dist/moralis.js"></script>
+      <title>File System MATIC</title>
+  </head>
+  
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+    <h1>IPFS Demo</h1>
+    <button id="btn-login" onclick="login_metamask()">Login</button>
+    <input type="text" name=",etadataName" id="metadataName" placeholder="name">
+    <br>
+    <textarea name="metadataDescription" id="metadataDescription" cols="20" rows="5"> </textarea>
+    <form id="form" onsubmit="return false">
+      <input type="file" name="fileinput" id = "fileinput"> <br><br>
+      <button name="fileinput" id = "fileinput" onclick="uploadfile()"> Upload file </button>
+        <br><br>
+    </form>
+    <button id="btn-logout" onclick="logout_user()">Logout</button>
+
+    <script>
+      // connect to Moralis server
+
+      const serverUrl = "https://od7unl6rhtze.usemoralis.com:2053/server";
+      const appId = "x8amTTl1PnpqryQEXuv8YHfP4XtcS3YjNecCXF2C";
+      Moralis.start({ serverUrl, appId });
+
+    </script>
+    <script>
+
+    function login_metamask() {
+          Moralis.authenticate().then(function(user) {
+            console.log(user.get('ethAddress'))
+            if (user.get('ethAddress') != 0) {
+              console.log('user logged in');
+              const currentUser = Moralis.User.current();
+              if (currentUser){
+                  console.log(currentUser)
+                  Moralis.enableEncryptedUser();
+                  Moralis.secret = 'My Secret Key'
+              }
+            }
+            else
+            {
+              console.log('error loggin user via metamask')
+            }
+          })
+      }
+      function uploadfile() {
+    
+
+
+      }
+      function logout_user() {
+        Moralis.user.logout().then(function(user) {
+          console.log('user logged out.')
+
+
+        })
+
+
+      }
+
+
+    </script>
+  </body>
+</html>
