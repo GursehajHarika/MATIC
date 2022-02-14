@@ -7,21 +7,13 @@ import '@openzeppelin/contracts/access/Ownable.sol';
 contract SimpleStorageContract is ERC721, Ownable {
     uint256 public mintPrice = 1 ether;
     uint256 public totalSupply;
-    uint256 public maxSupply;
+
     //by default isMintEnabled is false
     bool public isMintEnabled;
     mapping(address => uint256) public mintedWallets;
 
-    constructor() payable ERC721('Test', 'TEST'){
-        maxSupply = 5;
-    }
-
     function toggleIsMintEnabled() external onlyOwner {
         isMintEnabled = !isMintEnabled;
-    }
-
-    function setMaxSupply(uint256 maxSupply_) external onlyOwner{
-        maxSupply = maxSupply_;
     }
 
     function mint() external payable {
