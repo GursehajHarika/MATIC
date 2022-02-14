@@ -21,15 +21,16 @@
     <div id="root"></div>
     <h1>IPFS Demo</h1>
     <button id="btn-login" onclick="login_metamask()">Login</button>
-    <input type="text" name=",etadataName" id="metadataName" placeholder="name">
+    <input type="text" name="metadataName" id="metadataName" placeholder="name">
     <br>
     <textarea name="metadataDescription" id="metadataDescription" cols="20" rows="5"> </textarea>
     <form id="form" onsubmit="return false">
-      <input type="file" name="fileinput" id = "fileinput"> <br><br>
+      <input type="file" name="fileinput" id = "fileInput"> <br><br>
       <button name="fileinput" id = "fileinput" onclick="uploadfile()"> Upload file </button>
         <br><br>
     </form>
-    <button id="btn-logout" onclick="logout_user()">Logout</button>
+    <button id="btn-logout" onclick="logout_user()" style="visibility:hidden">Logout</button>
+    <button id="btn-filegrab" onclick="file_grab()" style="visibility:hidden">Grab File</button>
 
     <script>
       // connect to Moralis server
@@ -51,6 +52,9 @@
                   console.log(currentUser)
                   Moralis.enableEncryptedUser();
                   Moralis.secret = 'My Secret Key'
+                  document.getElementById("metadataName").value = currentUser.id;
+                  document.getElementById("btn-logout").style.visibility = "visible";
+                  document.getElementById("btn-filegrab").style.visibility = "visible";
               }
             }
             else
@@ -59,19 +63,52 @@
             }
           })
       }
-      function uploadfile() {
+      async function uploadfile() {
     
-
+          const data = fileInput.files[0]
+          const file = new Moralis.File(data.name, data)
+          await file.saveIPFS();
+          document.getElementById("metadataName").value = data.name;
+          console.log(file.ipfs(), file.hash());
+          return file.ipfs();
 
       }
-      function logout_user() {
-        Moralis.user.logout().then(function(user) {
+
+     async function uploadMetadata(imageURL){
+        
+        const name = document.getElementById("metadataName").value;
+        const description = document.getElementById("metadataDescription").value;
+
+        const metadata = {
+
+          "name": name,
+          "description": description,
+          "image": imageURL
+        }
+
+        const file = new Moralis.File("file.json", {base64 : btoa(JSON.stringify(metadata))});
+        await file.saveIPFS();
+
+        console.log(file.ipfs());
+      }
+
+      async function file_grab(){
+
+        const image = uploadfile()
+        await uploadMetadata(image)
+
+      }
+
+      function logout_user() 
+      {
+          Moralis.user.logOut().then(function(user) {
+
+          currentUser = Moralis.User.current();
           console.log('user logged out.')
+          document.getElementById("btn-logout").style.visibility = "visible";
 
 
         })
-
-
       }
 
 
