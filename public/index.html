@@ -1,117 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Web site created using create-react-app"
-    />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-      <!-- Moralis SDK code -->
-      <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
-      <script src="https://unpkg.com/moralis/dist/moralis.js"></script>
-      <title>File System MATIC</title>
-  </head>
-  
-  <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-    <h1>IPFS Demo</h1>
-    <button id="btn-login" onclick="login_metamask()">Login</button>
-    <input type="text" name="metadataName" id="metadataName" placeholder="name">
-    <br>
-    <textarea name="metadataDescription" id="metadataDescription" cols="20" rows="5"> </textarea>
-    <form id="form" onsubmit="return false">
-      <input type="file" name="fileinput" id = "fileInput"> <br><br>
-      <button name="fileinput" id = "fileinput" onclick="uploadfile()"> Upload file </button>
-        <br><br>
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="description" content="Web site created using create-react-app" />
+  <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+  <!-- Moralis SDK code -->
+  <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+  <script src="https://unpkg.com/moralis/dist/moralis.js"></script>
+  <title>File System MATIC</title>
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+  <!-- MDB -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.2/mdb.min.css" rel="stylesheet" />
+  <script src="app.js"> </script>
+  <style>
+    #app {
+      margin-top: 30px;
+      height: 400px;
+      background-color: white;
+      border-radius: 20px;
+      padding: 20px;
+    }
+  </style>
+</head>
+
+<body style="background-color: darkblue">
+  <noscript>You need to enable JavaScript to run this app.</noscript>
+  <div id="root"></div>
+  <h1 class="mb-3 text-center" style="background-color: white">IPFS Demo</h1>
+  <div class="text-center">
+    <button id="btn-login" class="btn btn-primary" onclick="login_metamask()">Login With Metamask</button>
+  </div>
+  <div id="app" class="text-center">
+    <p type="text" name="metadataName" id="metadataName" style="visibility:hidden"> </p>
+    <input type="text" name="fileinput" id="nameFile" placeholder="Name" style="visibility:hidden"> <br><br>
+    <textarea name="metadataDescription" id="metadataDescription" cols="20" rows="5"
+      style="visibility:hidden"> </textarea>
+    <form id="form" onsubmit="return false" style="visibility: hidden">
+      <input type="file" class="btn btn-primary" name="fileinput" id="fileInput"> <br><br>
+      <button name="fileinput" class="btn btn-secondary" id="fileinput" onclick="uploadfile()"> Upload file </button>
+      <button id="btn-viewnft" class="btn btn-secondary" onclick="getNFTs()" style="visibility:hidden"> View NFT </button>
+      <div id = "successMessage"> </div>  
+      <br><br>
     </form>
-    <button id="btn-logout" onclick="logout_user()" style="visibility:hidden">Logout</button>
-    <button id="btn-filegrab" onclick="file_grab()" style="visibility:hidden">Grab File</button>
+  </div>
+  <div class="text-center">
+    <button id="btn-logout" class="btn btn-primary" onclick="logout_user()" style="visibility:hidden">Logout</button>
+  </div>
+</body>
 
-    <script>
-      // connect to Moralis server
-
-      const serverUrl = "https://od7unl6rhtze.usemoralis.com:2053/server";
-      const appId = "x8amTTl1PnpqryQEXuv8YHfP4XtcS3YjNecCXF2C";
-      Moralis.start({ serverUrl, appId });
-
-    </script>
-    <script>
-
-    function login_metamask() {
-          Moralis.authenticate().then(function(user) {
-            console.log(user.get('ethAddress'))
-            if (user.get('ethAddress') != 0) {
-              console.log('user logged in');
-              const currentUser = Moralis.User.current();
-              if (currentUser){
-                  console.log(currentUser)
-                  Moralis.enableEncryptedUser();
-                  Moralis.secret = 'My Secret Key'
-                  document.getElementById("metadataName").value = currentUser.id;
-                  document.getElementById("btn-logout").style.visibility = "visible";
-                  document.getElementById("btn-filegrab").style.visibility = "visible";
-              }
-            }
-            else
-            {
-              console.log('error loggin user via metamask')
-            }
-          })
-      }
-      async function uploadfile() {
-    
-          const data = fileInput.files[0]
-          const file = new Moralis.File(data.name, data)
-          await file.saveIPFS();
-          document.getElementById("metadataName").value = data.name;
-          console.log(file.ipfs(), file.hash());
-          return file.ipfs();
-
-      }
-
-     async function uploadMetadata(imageURL){
-        
-        const name = document.getElementById("metadataName").value;
-        const description = document.getElementById("metadataDescription").value;
-
-        const metadata = {
-
-          "name": name,
-          "description": description,
-          "image": imageURL
-        }
-
-        const file = new Moralis.File("file.json", {base64 : btoa(JSON.stringify(metadata))});
-        await file.saveIPFS();
-
-        console.log(file.ipfs());
-      }
-
-      async function file_grab(){
-
-        const image = uploadfile()
-        await uploadMetadata(image)
-
-      }
-
-      function logout_user() 
-      {
-          Moralis.user.logOut().then(function(user) {
-
-          currentUser = Moralis.User.current();
-          console.log('user logged out.')
-          document.getElementById("btn-logout").style.visibility = "visible";
-
-
-        })
-      }
-
-
-    </script>
-  </body>
 </html>
