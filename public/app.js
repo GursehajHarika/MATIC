@@ -15,7 +15,7 @@ function login_metamask() {
                 Moralis.enableEncryptedUser();
                 Moralis.secret = 'My Secret Key'
                 console.log(currentUser)
-                document.getElementById("metadataName").innerText = "Logged in User: " + currentUser.id;
+                document.getElementById("metadataName").innerText = "Logged in User: " + user.get('ethAddress');
                 document.getElementById("metadataName").style.visibility = "visible";
                 document.getElementById("btn-logout").style.visibility = "visible";
                 document.getElementById("btn-viewnft").style.visibility = "visible";
