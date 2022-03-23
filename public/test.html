@@ -1,57 +1,86 @@
-<html>
-  <head>
-    <!-- Moralis SDK code -->
-    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
-    <script src="https://unpkg.com/moralis/dist/moralis.js"></script>
-  </head>
-  <body>
-    <h1>IPFS Demo v2</h1>
 
-    <button id="btn-login">Moralis Login</button>
-    <button id="btn-logout">Logout</button>
-    <button id="btn-get-stats">Refresh Stats</button>
+<!DOCTYPE html>
+<html lang="en">
 
-    <script>
-      // connect to Moralis server
+<head>
+  <meta charset="utf-8" />
+ 
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="description" content="Web site created using create-react-app" />
+  <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+  <!-- Moralis SDK code -->
+  <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+  <script src="https://unpkg.com/moralis/dist/moralis.js"></script>
+  <title>File System MATIC</title>
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+  <!-- MDB -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.2/mdb.min.css" rel="stylesheet" />
+  <script src="app.js"> </script>
+  <style>
+    #app {
+      margin-top: 30px;
+      height: 400px;
+      background-color: white;
+      border-radius: 20px;
+      padding: 20px;
+    }
+  </style>
+</head>
 
-      const serverUrl = "https://od7unl6rhtze.usemoralis.com:2053/server";
-      const appId = "x8amTTl1PnpqryQEXuv8YHfP4XtcS3YjNecCXF2C";
-      Moralis.start({ serverUrl, appId });
-      async function login() {
-        let user = Moralis.User.current();
-        if (!user) {
-          user = await Moralis.Web3.authenticate();
-        }
-        console.log("logged in user:", user);
-        getStats();
-      }
-      async function logOut() {
-        await Moralis.User.logOut();
-        console.log("logged out");
-      }
-      document.getElementById("btn-login").onclick = login;
-      document.getElementById("btn-logout").onclick = logOut;
-      document.getElementById("btn-get-stats").onclick = getStats;
+<body style="background-color: darkblue">
+  
+  <!--NAV BAR -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light" style="padding-left: 2%">
+    <a class="navbar-brand" href="#">Navbar</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <a class="nav-link" href="index.html">Home </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#">Register</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link"href="test.html"><b>File Managment</b> <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Switch Testnet</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
 
-      function getStats() {
-        const user = Moralis.User.current();
-        if (user) {
-          getUserTransactions(user);
-        }
-      }
-      
-      async function getUserTransactions(user) {
-        // create query
-        const query = new Moralis.Query("EthTransactions");
-        query.equalTo("from_address", user.get("ethAddress"));
+  <div id="resultSpace"></div>
+  <noscript>You need to enable JavaScript to run this app.</noscript>
+  <div id="root"></div>
 
-        // run query
-        const results = await query.find();
-        console.log("user transactions:", results);
-      }
+  <h1 class="mb-3 text-center" style="background-color: white">Matic</h1>
+  <div class="text-center">
+    <button id="btn-login" class="btn btn-primary" onclick="login_metamask()">Login With Metamask</button>
+  </div>
+  <div id="app" class="text-center">
+    <p type="text" name="metadataName" id="metadataName" style="visibility:hidden"> </p>
+    <input type="text" name="fileinput" id="nameFile" placeholder="Name" style="visibility:hidden"> <br><br>
+    <textarea name="metadataDescription" id="metadataDescription" cols="20" rows="5"
+      style="visibility:hidden"> </textarea>
+    <form id="form" onsubmit="return false" style="visibility: hidden">
+      <input type="file" class="btn btn-primary" name="fileinput" id="fileInput"> <br><br>
+      <button name="fileinput" class="btn btn-secondary" id="fileinput" onclick="uploadfile()"> Upload file </button>
+      <button id="btn-viewnft" class="btn btn-secondary" onclick="getNFTs()" style="visibility:hidden"> View NFT </button>
+      <div id = "successMessage"> </div>  
+      <br><br>
+    </form>
+  </div>
+  <div class="text-center">
+    <button id="btn-logout" class="btn btn-primary" onclick="logout_user()" style="visibility:hidden">Logout</button>
+  </div>
+</body>
 
-      //get stats on page load
-      getStats();
-    </script>
-  </body>
 </html>
