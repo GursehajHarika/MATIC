@@ -7,6 +7,7 @@ import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import { useState, useEffect } from "react";
+import $ from 'jquery'; 
 
 
 ReactDOM.render(

@@ -53,25 +53,47 @@
         <li class="nav-item" id="SwitchTest" style="visibility:hidden">
           <a class="nav-link" href="#">Switch Testnet</a>
         </li>
+        
       </ul>
     </div>
   </nav>
 
-  
 
-  <div id="resultSpace">
+ 
+
+  
+  <div id ="networkact" style="visibility:hidden">
+    <div id="resultSpace">
     
+    </div>
   </div>
   <noscript>You need to enable JavaScript to run this app.</noscript>
   <div id="root"></div>
 
 
-  <div id = "Logo" style="padding-left: 30%" >
-    <img src="https://github.com/GursehajHarika/MATIC/blob/Prototype/public/images/MATIC.png?raw=true" />
+  <div id = "Logo" class="text-center" >
+    <img src="https://github.com/GursehajHarika/MATIC/blob/Prototype/public/images/MATIC.png?raw=true" style="width: 20%;"/>
   </div>
-  <br>
-  <br>
+  <div class="text-center">
+    <button id="btn-login" class="btn btn-primary" onclick="login_metamask()">Login With Metamask</button>
+  </div>
+  <div id="app" class="text-center">
+    <p type="text" name="metadataName" id="metadataName" style="visibility:hidden"> </p>
+    <input type="text" name="fileinput" id="nameFile" placeholder="Name" style="visibility:hidden"> <br>
 
+    <textarea name="metadataDescription" id="metadataDescription" placeholder="Note/ description for your image" cols="20" rows="3"
+      style="visibility:hidden"> </textarea>
+    <form id="form" onsubmit="return false" style="visibility: hidden">
+      <input type="file" class="btn btn-primary" name="fileinput" id="fileInput"> <br><br>
+      <button name="fileinput" class="btn btn-secondary" id="fileinput" onclick="uploadfile()"> Upload file </button>
+      <button id="btn-viewnft" class="btn btn-secondary" onclick="getNFTs()" style="visibility:hidden"> View NFT </button>
+      <div id = "successMessage"> </div>  
+      <br><br>
+    </form>
+  </div>
+  <div class="text-center">
+    <button id="btn-logout" class="btn btn-primary" onclick="logout_user()" style="visibility:hidden">Logout</button>
+  </div>
 
 </body>
 

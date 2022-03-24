@@ -34,8 +34,8 @@
 <body style="background-color: rgb(255, 255, 255)">
   
   <!--NAV BAR -->
-  <nav class="navbar navbar-expand-sm navbar-dark bg-dark" style="padding-left: 2%">
-    <a class="navbar-brand" href="#">Matic</a>
+  <nav class="navbar navbar-expand-sm navbar-dark bg-dark text-center" style="padding-left: 2%">
+    <a class="navbar-brand" href="#">MATIC</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -47,22 +47,26 @@
         <li class="nav-item"id="register">
           <a class="nav-link disabled" href="#">Register</a>
         </li>
-
         <li class="nav-item" id="fileman" style="visibility:hidden">
           <a class="nav-link"href="test.html"><b>File Managment</b> <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item" id="SwitchTest" style="visibility:hidden">
           <a class="nav-link" href="#">Switch Testnet</a>
         </li>
+
       </ul>
     </div>
   </nav>
 
-  <div id="resultSpace"></div>
+  <div id ="networkact" style="visibility:hidden">
+    <div id="resultSpace">
+    </div>
+  </div>
   <noscript>You need to enable JavaScript to run this app.</noscript>
   <div id="root"></div>
-
-  <h1 class="mb-3 text-center" style="background-color: white">Matic</h1>
+  <div id = "Logo" class="text-center" >
+    <img src="https://github.com/GursehajHarika/MATIC/blob/Prototype/public/images/MATIC.png?raw=true" style="width: 20%;" />
+  </div>
   <div class="text-center">
     <button id="btn-login" class="btn btn-primary" onclick="login_metamask()">Login With Metamask</button>
   </div>

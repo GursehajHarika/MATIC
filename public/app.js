@@ -16,7 +16,7 @@ function login_metamask() {
                 Moralis.enableEncryptedUser();
                 Moralis.secret = 'My Secret Key'
                 console.log(currentUser)
-                document.getElementById("metadataName").innerText = "Logged in User: " + user.get('ethAddress');
+                document.getElementById("metadataName").innerText = "User logged in via wallet : " + user.get('ethAddress');
                 document.getElementById("metadataName").style.visibility = "visible";
                 document.getElementById("btn-logout").style.visibility = "visible";
                 document.getElementById("btn-viewnft").style.visibility = "visible";
@@ -152,7 +152,7 @@ async function getNetwork(){
         displayMessage("00","Active network is "+ getNetworkName(chainID));
     }
     else {
-        displayMessage("01","Active network is "+ getNetworkName(chainID) + ", Please consider Switching to Rinkeby");
+        displayMessage("01","Active network is "+ getNetworkName(chainID) + ", Please consider switching to Rinkeby");
 
     }
 }
@@ -181,11 +181,17 @@ web3.eth.getAccounts(function(err, accounts){
     if (err != null) console.error("An error occurred: "+err);
     else if (accounts.length == 0) {
         console.log("User is not logged in to MetaMask");
-        
+        document.getElementById("metalogin").style.visibility = "visible";
 }
     else{ 
     console.log("User is logged in to MetaMask");
     document.getElementById("SwitchTest").style.visibility = "visible";
     document.getElementById("fileman").style.visibility = "visible";
+    document.getElementById("networkact").style.visibility = "visible";
 }
 });
+
+
+function myFunction() {
+    alert("Meta mask wallet was not detected. please login into metamask ");
+  }
