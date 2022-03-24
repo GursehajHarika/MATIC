@@ -4,6 +4,7 @@
 
 <head>
   <meta charset="utf-8" />
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#000000" />
@@ -31,10 +32,10 @@
   </style>
 </head>
 
-<body style="background-color: darkblue">
+<body style="background-color: rgb(255, 255, 255)">
   <!--NAV BAR -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-light" style="padding-left: 2%">
-    <a class="navbar-brand" href="#">Navbar</a>
+  <nav class="navbar navbar-expand-sm navbar-dark bg-dark" style="padding-left: 2%">
+    <a class="navbar-brand" href="#">MATIC</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -43,13 +44,13 @@
         <li class="nav-item active">
           <a class="nav-link" href="index.html"><b>Home</b> <span class="sr-only">(current)</span></a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item"id="register">
           <a class="nav-link disabled" href="#">Register</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="test.html">File Managment</a>
+        <li class="nav-item" id="fileman" style="visibility:hidden">
+          <a class="nav-link"href="test.html">File Managment</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" id="SwitchTest" style="visibility:hidden">
           <a class="nav-link" href="#">Switch Testnet</a>
         </li>
       </ul>
@@ -64,10 +65,14 @@
   <noscript>You need to enable JavaScript to run this app.</noscript>
   <div id="root"></div>
 
-  <h1 class="mb-3 text-center" style="background-color: white">Matic</h1>
+
   <div id = "Logo" style="padding-left: 30%" >
-    <img src="/public/images/MATIC.png" />
+    <img src="https://github.com/GursehajHarika/MATIC/blob/Prototype/public/images/MATIC.png?raw=true" />
   </div>
+  <br>
+  <br>
+
+
 </body>
 
 </html>

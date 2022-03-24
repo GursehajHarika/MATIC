@@ -1,5 +1,6 @@
 // connect to Moralis server
 
+
 const serverUrl = "https://od7unl6rhtze.usemoralis.com:2053/server";
 const appId = "x8amTTl1PnpqryQEXuv8YHfP4XtcS3YjNecCXF2C";
 Moralis.start({ serverUrl, appId });
@@ -147,7 +148,13 @@ function setWeb3Environment(){
 
 async function getNetwork(){
     chainID = await web3.eth.net.getId();
-    displayMessage("00","Active network is "+ getNetworkName(chainID));
+    if (chainID == 4){
+        displayMessage("00","Active network is "+ getNetworkName(chainID));
+    }
+    else {
+        displayMessage("01","Active network is "+ getNetworkName(chainID) + ", Please consider Switching to Rinkeby");
+
+    }
 }
 
 function getNetworkName(chainID){
@@ -165,3 +172,20 @@ function monitorNetwork(){
         window.location.reload()
     })
 }
+
+
+
+//Detecting USer logged into metamask
+let logval = 0;
+web3.eth.getAccounts(function(err, accounts){
+    if (err != null) console.error("An error occurred: "+err);
+    else if (accounts.length == 0) {
+        console.log("User is not logged in to MetaMask");
+        
+}
+    else{ 
+    console.log("User is logged in to MetaMask");
+    document.getElementById("SwitchTest").style.visibility = "visible";
+    document.getElementById("fileman").style.visibility = "visible";
+}
+});
