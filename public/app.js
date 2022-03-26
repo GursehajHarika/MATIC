@@ -117,7 +117,7 @@ function logout_user() {
 //https://rinkeby.rarible.com/token/TOKEN_ADDRESS:TOKEN_ID
 
 
-var web3;
+
 checkWeb3();
 
 function displayMessage(messageType, message){
@@ -148,11 +148,13 @@ function setWeb3Environment(){
 
 async function getNetwork(){
     chainID = await web3.eth.net.getId();
-    if (chainID == 4){
+    if (chainID == 80001){
         displayMessage("00","Active network is "+ getNetworkName(chainID));
     }
     else {
-        displayMessage("01","Active network is "+ getNetworkName(chainID) + ", Please consider switching to Rinkeby");
+        displayMessage("01","Active network is "+ getNetworkName(chainID) + ", This network is currently not supported");
+        document.getElementById("btn-switch").style.visibility = "visible";
+        document.getElementById("btn-login").style.visibility = "hidden";
 
     }
 }
@@ -192,6 +194,42 @@ web3.eth.getAccounts(function(err, accounts){
 });
 
 
-function myFunction() {
-    alert("Meta mask wallet was not detected. please login into metamask ");
-  }
+function myfunction(){
+ 
+    const chainIdHex = web3.currentProvider.chainId;
+    const chainIdDec =  web3.eth.getChainId();
+    console.log(chainIdHex);
+    console.log(chainIdDec);
+    try {
+         web3.currentProvider.request({
+          method: "wallet_switchEthereumChain",
+          params: [{ chainId: "0x13881" }]
+        });
+      } catch (error) {
+        alert(error.message);
+      }
+      if (error.code === 4902) {
+        try {
+           web3.currentProvider.request({
+            method: "wallet_addEthereumChain",
+            params: [
+              {
+                chainId: "0x13881",
+                chainName: "Mumbai",
+                rpcUrls: ["https://rpc-mumbai.matic.today"],
+                nativeCurrency: {
+                  name: "Matic",
+                  symbol: "Matic",
+                  decimals: 18,
+                },
+                blockExplorerUrls: ["https://explorer-mumbai.maticvigil.com"],
+              },
+            ],
+          });
+        } catch (error) {
+          alert(error.message);
+        }
+      }
+      document.getElementById("btn-switch").innerHTML =
+      `<a href="javascript:location.reload(true)">Refresh Page</a>`
+    }
