@@ -169,7 +169,7 @@ function getNetworkName(chainID){
     return networks[chainID];
 }
 
-function monitorNetwork(){
+async function monitorNetwork(){
     Moralis.onChainChanged(function(){
         window.location.reload()
     })
@@ -197,7 +197,7 @@ web3.eth.getAccounts(function(err, accounts){
 function myfunction(){
  
     const chainIdHex = web3.currentProvider.chainId;
-    const chainIdDec =  web3.eth.getChainId();
+    const chainIdDec =  web3.eth.net.getId();
     console.log(chainIdHex);
     console.log(chainIdDec);
     try {
@@ -205,11 +205,14 @@ function myfunction(){
           method: "wallet_switchEthereumChain",
           params: [{ chainId: "0x13881" }]
         });
+        
       } catch (error) {
+        console.log("Page refershing ");
         alert(error.message);
       }
-      if (error.code === 4902) {
-        try {
+      if (chainIdHex !== 0x13881) {
+        console.log("Page refershing 2 ");
+        try {  
            web3.currentProvider.request({
             method: "wallet_addEthereumChain",
             params: [
@@ -226,10 +229,11 @@ function myfunction(){
               },
             ],
           });
+          location.reload();
         } catch (error) {
           alert(error.message);
         }
       }
-      document.getElementById("btn-switch").innerHTML =
-      `<a href="javascript:location.reload(true)">Refresh Page</a>`
+
+    
     }
