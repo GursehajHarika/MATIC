@@ -5,10 +5,13 @@ const serverUrl = "https://od7unl6rhtze.usemoralis.com:2053/server";
 const appId = "x8amTTl1PnpqryQEXuv8YHfP4XtcS3YjNecCXF2C";
 Moralis.start({ serverUrl, appId });
 let currentUser;
-function login_metamask() {
+const nft_contract_address = "0x65F931a0fE9231d26cF2471aD617D5473EC4B629"
+
+
+async function login_metamask() {
     Moralis.authenticate().then(function (user) {
         console.log(user.get('ethAddress'))
-        currentUser = Moralis.User.current();
+        let currentUser = Moralis.User.current();
         if (user.get('ethAddress') != 0) {
             console.log('user logged in');
             if (currentUser) {
@@ -24,7 +27,7 @@ function login_metamask() {
                 document.getElementById("metadataDescription").style.visibility = "visible";
                 document.getElementById("form").style.visibility = "visible";
                 document.getElementById("nameFile").style.visibility = "visible";
-            }
+              }
         }
         else {
             Moralis.enableWeb3();
@@ -36,56 +39,54 @@ async function uploadfile() {
 
     const data = fileInput.files[0]
     const file = new Moralis.File(data.name, data)
+    const fileExt = data.name.substring(data.name.indexOf(".") + 1);
     await file.saveIPFS();
     document.getElementById("metadataName").value = data.name;
     let fileHash = file.hash();
     let fileUrl = file.ipfs();
-    console.log(file.ipfs(), file.hash());
+    console.log(file.ipfs(), file.hash(), data.name);
     file.ipfs();
-
-    //Create Metadata with file hash & data
     let metadata = 
-    {
-        name: document.getElementById("metadataName").value,
-        description: document.getElementById("metadataDescription").value,
-        Hash: fileHash,
-        file: "/ipfs/" + fileHash,
-        walletID: Moralis.currentUser
-    }
+      {
+          name: document.getElementById("metadataName").value,
+          description: document.getElementById("metadataDescription").value,
+          image: fileUrl
+      }
     const jsonFile = new Moralis.File("metadata.json", { base64: btoa(JSON.stringify(metadata))});
     await jsonFile.saveIPFS();
-    let metadataHash = jsonFile.hash();
+    let metadataHash = jsonFile.ipfs();
     console.log(metadataHash);
     console.log(jsonFile.ipfs());
-
-    //Uploading to Rarible (Moralis Plugin)
-    let res = await Moralis.Plugins.rarible.lazyMint({
-        chain: 'rinkeby',
-        userAddress: currentUser.get("ethAddress"),
-        tokenType: 'ERC721',
-        tokenUri: 'https://ipfs.moralis.io:2053//ipfs/' + metadataHash, 
-        royaltiesAmount: 5, // 0.05% royalty. Optional
-      })
-    console.log(res)
-    let token_address = res.data.result.tokenAddress
-    let token_id = res.data.result.tokenId;
-    let url = `https://rinkeby.rarible.com/token/${token_address}:${token_id}`
-    document.getElementById("successMessage").innerHTML =
-        `NFT Minted. <a  target="_blank" href="${url}">View NFT</a>`
+    const txt = await mintToken(metadataHash).then(notify)
     
-    setTimeout(() => {
-             document.getElementById("successMessage").style.visibility = "hidden"
-    }, 10000)   
 }
+async function mintToken(_uri){
+    const encodedFunction = web3.eth.abi.encodeFunctionCall({
+      name: "mintToken",
+      type: "function",
+      inputs: [{
+        type: 'string',
+        name: 'tokenURI'
+        }]
+    }, [_uri]);
+  
+    const transactionParameters = {
+      to: nft_contract_address,
+      from: ethereum.selectedAddress,
+      data: encodedFunction
+    };
+    const txt = await ethereum.request({
+      method: 'eth_sendTransaction',
+      params: [transactionParameters]
+    });
+    return txt
+  }
+  
+  async function notify(_txt){
+    document.getElementById("resultSpace").innerHTML =  
+    `<input disabled = "true" id="result" type="text" class="form-control" placeholder="Description" aria-label="URL" aria-describedby="basic-addon1" value="Your NFT was minted in transaction ${_txt}">`;
+  } 
 
-
-async function getNFTs()
-{
-    const options = { chain: "rinkeby", address: '0x7071717c7f1de1d0cc0d43c163f3fb20ee659c8d'};
-    const rinkebyNFTs = await Moralis.Web3API.account.getNFTs(options);
-
-    console.log(rinkebyNFTs)
-}
 
 function handleAccountsChanged(accounts) {
     if (accounts.length === 0) {
@@ -111,6 +112,8 @@ function logout_user() {
         document.getElementById("metadataDescription").style.visibility = "hidden";
         document.getElementById("form").style.visibility = "hidden";
         document.getElementById("nameFile").style.visibility = "hidden";
+        
+
     });
 }
 
@@ -194,13 +197,15 @@ web3.eth.getAccounts(function(err, accounts){
 });
 
 
-function myfunction(){
+function myfunction()
+{
  
     const chainIdHex = web3.currentProvider.chainId;
     const chainIdDec =  web3.eth.net.getId();
     console.log(chainIdHex);
     console.log(chainIdDec);
-    try {
+    try 
+    {
          web3.currentProvider.request({
           method: "wallet_switchEthereumChain",
           params: [{ chainId: "0x13881" }]
@@ -210,7 +215,8 @@ function myfunction(){
         console.log("Page refershing ");
         alert(error.message);
       }
-      if (chainIdHex !== 0x13881) {
+      if (chainIdHex !== 0x13881) 
+      {
         console.log("Page refershing 2 ");
         try {  
            web3.currentProvider.request({
@@ -235,5 +241,8 @@ function myfunction(){
         }
       }
 
+}
+
+
+
     
-    }

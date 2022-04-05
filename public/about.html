@@ -1,0 +1,180 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="description" content="Web site created using create-react-app" />
+  <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+  <!-- Moralis SDK code -->
+  <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+  <script src="https://unpkg.com/moralis/dist/moralis.js"></script>
+  <title>File System MATIC</title>
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+  <!-- MDB -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.2/mdb.min.css" rel="stylesheet" />
+  <script src="app.js"> </script>
+  <style>
+  body {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+.column {
+  float: left;
+  width: 33.3%;
+  margin-bottom: 16px;
+  padding: 0 8px;
+}
+
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  margin: 8px;
+}
+
+.about-section {
+  padding: 50px;
+  text-align: center;
+  background-color: #626877;
+  color: white;
+}
+
+.container {
+  padding: 0 16px;
+}
+
+.container::after, .row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.title {
+  color: grey;
+}
+
+@media screen and (max-width: 650px) {
+  .column {
+    width: 100%;
+    display: block;
+  }
+}
+    
+  </style>
+</head>
+
+<body style="background-color: rgb(255, 255, 255)">
+  <!--NAV BAR -->
+  <nav class="navbar navbar-expand-sm navbar-dark bg-dark" style="padding-left: 2%">
+    <a class="navbar-brand" href="#">MATIC</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item" id="About">
+            <a class="nav-link" href="about.html"><b>About</b><span class="sr-only">(current)</span></a>
+          </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="index.html"><b>Home</b> <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item"id="register">
+          <a class="nav-link disabled" href="#">Register</a>
+        </li>
+        <li class="nav-item" id="fileman" style="visibility:hidden">
+          <a class="nav-link"href="test.html">File Managment</a>
+        </li>
+        <li class="nav-item" id="SwitchTest" style="visibility:hidden">
+          <a class="nav-link" href="#">Switch Testnet</a>
+        </li>
+        
+      </ul>
+    </div>
+  </nav>
+  <div id ="networkact" style="visibility:hidden">
+    <div id="resultSpace">
+    
+    </div>
+  </div>
+  <noscript>You need to enable JavaScript to run this app.</noscript>
+  <div class="about-section">
+    <h3 style="padding-left: 30px">Use case?</h3>
+    <p style="padding-left: 30px">Imagine selling a car on Kijiji or Facebook Marketplace, after agreeing with the buyer on how much they should pay you, the next step is to transfer ownership to the new owner. This is usually done by visiting a governing 
+      body which issues and regualtes motor vehicles in your area, in Ontario this can be completed by visiting Service Ontario.</p>
+    <p style="padding-left: 30px">All this sounds relatively normal and is how articles of ownership have been transacted for decades. However, there are a few flaws with this methodology. The first is receiving payment. In the event that one party does not 
+      want to pay the agreed amount there is no easy way of stopping the transaction. This is handled wihtin the smart contract. Smart contracts will disallow the transaction if one or both parties do not hold their end of the bargin. For example, Bob agrees 
+      to pay Alice $100 for a textbook. Bob only sends $99 to Alice and therefore causes the contract to terminate. Alice keeps her textbook and the funds are returned to Bob. We can already see how smart contracts help to protect both parties in this 
+      situation. The smart contract acts as an intermediary between both parties ensuring that all conditions are met before completing the transaction. 
+    <p style="padding-left: 30px">The second benefit is an increased level of reliability and speed. Users will no longer need to visit a physical
+      location and are able to transact almost instantly.</p>
+    <p style="padding-left: 30px">Lastly, the main idea behind an NFT or Non-Fungible-Token is the idea that users can undeniably prove that this user owns this specific NFT and that it has not been modified in anyway shape or form. Ideally,
+      a governing body like the Ministry of Transportation (MTO) would issue NFT's to all motor vehicle owners. Users would then be able to check that this NFT was issued by the MTO and any user that would want to sell their car would be able to without the need 
+      of a third-party's approval.</p>
+    <h3 style="padding-left: 30px ">Why?</h3>
+    <p style="padding-left: 30px">The current implementation of transferring ownership is costly and slow. Our objective is to allow users to transact digital documents using IPFS and issue authenticity certificates in the form of NFT’s 
+      on the Polygon Testnet. Blockchains introduce the idea of a decentralized network where no one party is capable of controlling the data, in order for the network to go offline a malicious actor would need to control a majority of the nodes. 
+      This allows users to be in full control of their data and minimizes risks associated with data breaches. In a centralized network, there is a single point of failure, if the data center is compromised all data on that network are now at risk. 
+      In comparison to a decentralized network if a user’s wallet is compromised it does not affect other users on the network. </p>      
+    <h3 style="padding-left: 30px">What is the Matic File System?</h3>
+    <p style="padding-left: 30px">Matic File System allows users to transact digital documents by creating an NFT every time a file is uploaded. All files are uploaded to IPFS which is a decentralized file storage system. After succesfully uploading, 
+      metadata is extracted to be used for the NFT. After charging the user a small amount in gas fees and service fees the user is issued an NFT, digitally proving that they are the owner of the file.</p>
+  </div>
+  
+  <h2 style="text-align:center">Our Team</h2>
+  <div class="row">
+    <div class="column">
+      <div class="card">
+        <img src="/images/1601645303454.jfif" alt="Gursehaj Harika" style="width:30%">
+        <div class="container">
+          <h2>Gursehaj Harika</h2>
+          <p class="title">Founder</p>
+          <p>Gursehaj is a 4th year B.Tech student at McMaster University. He has a strong background in software development with over 3 years of front and back end development. He has experience with technologies such as Docker, ReactJS, Moralis and other 
+            development tools.
+          </p>
+          <p>harikag@mcmaster.ca</p>
+        </div>
+      </div>
+    </div>
+  
+    <div class="column">
+      <div class="card">
+        <img src="/images/1625279838908.jfif" alt="Kogul Balasubramaniam" style="width:30%">
+        <div class="container">
+          <h2>Kogul Balasubramaniam</h2>
+          <p class="title">Founder</p>
+          <p>Kogul is a 4th year B.Tech student at McMaster University. Kogul developed the Arduino code of a telemetry system which insight into the health of the vehicle when under high load. Kogul has worked with ReactJS, HTML/CSS, Python and other technologies.</p>
+          <p>balask4@mcmaster.ca</p>
+        </div>
+      </div>
+    </div>
+  
+    <div class="column">
+      <div class="card">
+        <img src="/images/1632176996090.jfif" alt="Jonathan Duong" style="width:30%">
+        <div class="container">
+          <h2>Jonathan Duong</h2>
+          <p class="title">Founder</p>
+          <p>Jonathan is a 4th year B.Tech student at McMaster University. He has a strong background in AI/ML but helped develop the front end and smart contract for this project. Jonathan has worked with Python, ReactJS, HTML/CSS and other technologies.</p>
+          <p>duongj14@mcmaster.ca</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
