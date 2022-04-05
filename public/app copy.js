@@ -16,7 +16,6 @@ function login_metamask() {
             
             if (currentUser) {
             
-               
                 Moralis.enableEncryptedUser();
                 Moralis.secret = 'My Secret Key'
             
