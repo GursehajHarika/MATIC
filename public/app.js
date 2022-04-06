@@ -36,7 +36,7 @@ async function login_metamask() {
                 //console.log("Usre is now defined with info "+res);
                 
                 //Getting NFT p1
-                const options = {address: "0x8309070f6912fb401222b6007e336732991ec827", chain: "rinkeby" };
+                const options = {address: "0x65F931a0fE9231d26cF2471aD617D5473EC4B629", chain: "0x13881" };
                 NFTget(options);
 
               }
@@ -49,10 +49,22 @@ async function login_metamask() {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 //getting NFTS p2
 async function NFTget(options){
-  let NFTs = await Moralis.Web3API.token.getAllTokenIds(options)
-  console.log(NFTs.result)
+  let NFTs = await Moralis.Web3API.token.getNFTOwners(options)
+  console.log(NFTs);
   let nftinfo = fetchNFT_new(NFTs.result);
   //console.log(nftinfo.result);
   //renderInv(nftinfo.result);
@@ -64,33 +76,53 @@ function fetchNFT_new(NFTs){
   for (let i = 0; i < NFTs.length;i++) {
       console.log("fetch function ");
       let nft = NFTs[i];
-      let metad = nft.token_uri;
-      let responsee = fetch(metad)
-      .then (res => {responsee.json()}).then (res => {console.log(res)});
+      let metad = nft.metadata
+      let metaparse = JSON.parse(metad);
+      console.log(metaparse);
+      renderInv(metaparse)
+     // let responsee = fetch(metad)
+     // .then (res => {console.log(res)});
 
   }
 }
 
 
-function fetchNFT(NFTs){
-  let promise = [];
-  for (let i = 0; i < NFTs.length;i++) {
-      let nft = NFTs[i];
-      let id = nft.token_id;
-      let metadata= nft.metadata;
-      //console.log("nft num " + nft + "id is : " + id + "metadata is : " + metadata );
-      fetch("https://od7unl6rhtze.usemoralis.com:2053/server/functions/getNFT?_ApplicationID=x8amTTl1PnpqryQEXuv8YHfP4XtcS3YjNecCXF2C&nftId=" + id)
-      .then(res => res.json())
-      .then(res => console.log(res))
-      .then(res => renderInv(res.result))
-      .then(res => console.log(res));
-  
-
-      //.then( () => {return nft;});
-
-  }
-  
+function loadJSON(path, success, error) {
+  var xhr = new XMLHttpRequest();
+  xhr.onreadystatechange = function () {
+    console.log(xhr.readyState);
+    if (xhr.readyState === 4)
+     {
+      if (xhr.status === 200) {
+        success(JSON.parse(xhr.responseText));
+      }
+      else {
+        error(xhr);
+      }
+    }
+  };
+  xhr.open('GET', path, true);
+  xhr.send();
 }
+
+// function fetchNFT(NFTs){
+//   let promise = [];
+//   for (let i = 0; i < NFTs.length;i++) {
+//       let nft = NFTs[i];
+//       let id = nft.token_id;
+//       let metadata= nft.metadata;
+//       //console.log("nft num " + nft + "id is : " + id + "metadata is : " + metadata );
+//       fetch("https://od7unl6rhtze.usemoralis.com:2053/server/functions/getNFT?_ApplicationID=x8amTTl1PnpqryQEXuv8YHfP4XtcS3YjNecCXF2C&nftId=" + id)
+//       .then(res => res.json())
+//       .then(res => console.log(res))
+//       //.then(res => renderInv(res.result))
+//       .then(res => console.log(res));
+
+//       //.then( () => {return nft;});
+
+//   }
+  
+// }
 
 function renderInv(NFTs) {
   const parent = document.getElementById("nftview");
@@ -98,8 +130,8 @@ function renderInv(NFTs) {
   <div class="card">
       <img class="card-img-top" src="${NFTs.image}" alt="Card image cap">
           <div class="card-body">
-              <h5 class="card-title">${NFTs.file_name}</h5>
-              <p class="card-text">${NFTs.description}</p>
+              <h5 class="card-title">${NFTs.name}</h5>
+              <p class="card-text">${NFTs.descripton}</p>
               <a href="#" class="btn btn-primary">Go somewhere</a>
           </div>
   </div>`
@@ -111,6 +143,15 @@ function renderInv(NFTs) {
 
  
 }
+
+
+
+
+
+
+
+
+
 
 async function uploadfile() {
 
