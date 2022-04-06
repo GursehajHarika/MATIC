@@ -125,14 +125,15 @@ function loadJSON(path, success, error) {
 // }
 
 function renderInv(NFTs) {
-  const parent = document.getElementById("nftview");
+  const parent = document.getElementById("nftview")
+
   let htmlString = `
   <div class="card">
       <img class="card-img-top" src="${NFTs.image}" alt="Card image cap">
           <div class="card-body">
               <h5 class="card-title">${NFTs.name}</h5>
-              <p class="card-text">${NFTs.descripton}</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
+              <p class="card-text">${NFTs.description}</p>
+              <a href="${NFTs.image}" class="btn btn-primary">View File</a>
           </div>
   </div>`
       let col = document.createElement("div")
@@ -151,33 +152,50 @@ function renderInv(NFTs) {
 
 
 
-
-
 async function uploadfile() {
 
     const data = fileInput.files[0]
     const file = new Moralis.File(data.name, data)
     const fileExt = data.name.substring(data.name.indexOf(".") + 1);
-    await file.saveIPFS();
-    document.getElementById("metadataName").value = data.name;
-    let fileHash = file.hash();
-    let fileUrl = file.ipfs();
-    console.log(file.ipfs(), file.hash(), data.name);
-    file.ipfs();
-    let metadata = 
-      {
-          name: document.getElementById("metadataName").value,
-          description: document.getElementById("metadataDescription").value,
-          image: fileUrl
-      }
-    const jsonFile = new Moralis.File("metadata.json", { base64: btoa(JSON.stringify(metadata))});
-    await jsonFile.saveIPFS();
-    let metadataHash = jsonFile.ipfs();
-    console.log(metadataHash);
-    console.log(jsonFile.ipfs());
-    const txt = await mintToken(metadataHash).then(notify)
+    const lowered = fileExt.toLowerCase();
+
+    if (lowered == "pdf" || fileExt == "png" || fileExt == "jpeg" || fileExt == "jpg" ){
+
+      await file.saveIPFS();
+      document.getElementById("metadataName").value = data.name;
+      let fileHash = file.hash();
+      let fileUrl = file.ipfs();
+      console.log(file.ipfs(), file.hash(), data.name);
+      // if (fileExt == "pdf"){
+  
+  
+      // }
+      file.ipfs();
+      let metadata = 
+        {
+            name: document.getElementById("metadataName").value,
+            description: document.getElementById("metadataDescription").value,
+            image: fileUrl
+        }
+      const jsonFile = new Moralis.File("metadata.json", { base64: btoa(JSON.stringify(metadata))});
+      await jsonFile.saveIPFS();
+      let metadataHash = jsonFile.ipfs();
+      console.log(metadataHash);
+      console.log(jsonFile.ipfs());
+      const txt = await mintToken(metadataHash).then(notify)
+
+
+
+
+    }
+    else {
+      
+        alert("File extension not supported!");
+    }
+ 
     
 }
+
 async function mintToken(_uri){
     const encodedFunction = web3.eth.abi.encodeFunctionCall({
       name: "mintToken",
