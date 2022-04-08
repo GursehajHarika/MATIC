@@ -73,20 +73,21 @@ async function NFTget(options) {
 
 
 }
-function fetchNFT_new(NFTs) {
+// function fetchNFT_new(NFTs) {
 
-  for (let i = 0; i < NFTs.length; i++) {
-    console.log("fetch function ");
-    let nft = NFTs[i];
-    let metad = nft.metadata
-    let metaparse = JSON.parse(metad);
-    //console.log(metaparse);
-    renderInv(metaparse)
-    // let responsee = fetch(metad)
-    // .then (res => {console.log(res)});
+//   for (let i = 0; i < NFTs.length; i++) {
+  
+//     let nft = NFTs[i];
+//     let metad = nft.metadata
+//     let metaparse = JSON.parse(metad);
+//     //console.log(metaparse);
+//     renderInv(metaparse)
+//     let nftinfo = fetchNFT_new(NFTs.result);
+//     // let responsee = fetch(metad)
+//     // .then (res => {console.log(res)});
 
-  }
-}
+//   }
+// }
 
 
 function loadJSON(path, success, error) {
@@ -106,35 +107,32 @@ function loadJSON(path, success, error) {
   xhr.send();
 }
 
-// function fetchNFT(NFTs){
-//   let promise = [];
-//   for (let i = 0; i < NFTs.length;i++) {
-//       let nft = NFTs[i];
-//       let id = nft.token_id;
-//       let metadata= nft.metadata;
-//       //console.log("nft num " + nft + "id is : " + id + "metadata is : " + metadata );
-//       fetch("https://od7unl6rhtze.usemoralis.com:2053/server/functions/getNFT?_ApplicationID=x8amTTl1PnpqryQEXuv8YHfP4XtcS3YjNecCXF2C&nftId=" + id)
-//       .then(res => res.json())
-//       .then(res => console.log(res))
-//       //.then(res => renderInv(res.result))
-//       .then(res => console.log(res));
 
-//       //.then( () => {return nft;});
 
-//   }
+function fetchNFT_new(NFTs){
 
-// }
+
+
+  for (let i = 0; i < NFTs.length;i++) {
+    console.log("NFT OWner check started with wallet ID " + NFTs[i].owner_of );
+    if ( NFTs[i].owner_of == user.get("ethAddress")){
+      let nft = NFTs[i];
+      let metad = nft.metadata
+      let metaparse = JSON.parse(metad);
+      renderInv(metaparse)
+    }
+  }
+}
 
 function renderInv(NFTs) {
   const parent = document.getElementById("nftview")
-
   let htmlString = `
   <div class="card">
       <img class="card-img-top" src="${NFTs.image}" alt="Card image cap">
           <div class="card-body">
               <h5 class="card-title">${NFTs.name}</h5>
               <p class="card-text">${NFTs.description}</p>
-              <a href="${NFTs.image}" class="btn btn-primary">View File</a>
+              <a target="_blank" href="${NFTs.image}" class="btn btn-primary">View File</a>
           </div>
   </div>`
   let col = document.createElement("div")
@@ -145,12 +143,6 @@ function renderInv(NFTs) {
 
 
 }
-
-
-
-
-
-
 
 
 async function uploadfile() {
@@ -254,10 +246,6 @@ async function logout_user() {
   });
 }
 
-//https://rinkeby.rarible.com/token/TOKEN_ADDRESS:TOKEN_ID
-
-
-
 checkWeb3();
 
 function displayMessage(messageType, message) {
@@ -275,7 +263,6 @@ async function checkWeb3() {
     displayMessage("01", "This App Requires MetaMask, Please Install MetaMask");
   }
   else {
-    //displayMessage("00", "Metamask is Installed");
     setWeb3Environment()
   }
 }
