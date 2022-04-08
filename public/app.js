@@ -4,84 +4,86 @@
 const serverUrl = "https://od7unl6rhtze.usemoralis.com:2053/server";
 const appId = "x8amTTl1PnpqryQEXuv8YHfP4XtcS3YjNecCXF2C";
 Moralis.start({ serverUrl, appId });
-let currentUser;
 const nft_contract_address = "0x65F931a0fE9231d26cF2471aD617D5473EC4B629"
-
-
+let user = Moralis.User.current();
 async function login_metamask() {
-    Moralis.authenticate().then(function (user) {
-        console.log(user.get('ethAddress'))
-        let currentUser = Moralis.User.current();
-        if (user.get('ethAddress') != 0) {
-            console.log('user logged in');
-            if (currentUser) {
-                console.log(currentUser)
-                Moralis.enableEncryptedUser();
-                Moralis.secret = 'My Secret Key'
-                console.log(currentUser)
-                document.getElementById("metadataName").innerText = "User logged in via wallet : " + user.get('ethAddress');
-                document.getElementById("metadataName").style.visibility = "visible";
-                document.getElementById("btn-logout").style.visibility = "visible";
-                document.getElementById("btn-viewnft").style.visibility = "visible";
-                document.getElementById("btn-login").style.visibility = "hidden";
-                document.getElementById("metadataDescription").style.visibility = "visible";
-                document.getElementById("form").style.visibility = "visible";
-                document.getElementById("nameFile").style.visibility = "visible";
-
-                //NFT and sessions
-                var sId = user.get('ethAddress');
-                writeCookie('sessionId', sId, 3)
-                writeCookie('cUSER', Moralis.User.current(),3);
-                //res = readCookie('cUSER');
-                //console.log("Usre is now defined with info "+res);
-                
-                //Getting NFT p1
-                const options = {address: "0x65F931a0fE9231d26cF2471aD617D5473EC4B629", chain: "0x13881" };
-                NFTget(options);
-
-              }
-        }
-        else {
-            Moralis.enableWeb3();
-        }
+  if (!user) {
+    user = await Moralis.authenticate({
+      signingMessage: "Log in using Moralis"
     })
+      .then(function (user) {
+        console.log("logged in user:", user.id);
+        console.log(user.get("ethAddress"));
+        let ethAddress = user.get("ethAddress");
+        console.log(user)
+        
+    console.log(user)
+    document.getElementById("metadataName").innerText = "User logged in via wallet : " + user.get('ethAddress');
+    document.getElementById("metadataName").style.visibility = "visible";
+    document.getElementById("btn-logout").style.visibility = "visible";
+    document.getElementById("btn-viewnft").style.visibility = "visible";
+    document.getElementById("btn-login").style.visibility = "hidden";
+    document.getElementById("metadataDescription").style.visibility = "visible";
+    document.getElementById("form").style.visibility = "visible";
+    document.getElementById("nameFile").style.visibility = "visible";
+    document.getElementById("SwitchTest").style.visibility = "visible";
+    document.getElementById("fileman").style.visibility = "visible";
+    document.getElementById("networkact").style.visibility = "visible";
+   
+    //Getting NFT p1
+    const options = { address: "0x65F931a0fE9231d26cF2471aD617D5473EC4B629", chain: "0x13881" };
+
+      });
+  }
+  else {
+
+    let ethAddress = user.get("ethAddress");
+    console.log(user)
+    document.getElementById("metadataName").innerText = "User logged in via wallet : " + user.get('ethAddress');
+    document.getElementById("metadataName").style.visibility = "visible";
+    document.getElementById("btn-logout").style.visibility = "visible";
+    document.getElementById("btn-viewnft").style.visibility = "visible";
+    document.getElementById("btn-login").style.visibility = "hidden";
+    document.getElementById("metadataDescription").style.visibility = "visible";
+    document.getElementById("form").style.visibility = "visible";
+    document.getElementById("nameFile").style.visibility = "visible";
+    document.getElementById("SwitchTest").style.visibility = "visible";
+    document.getElementById("fileman").style.visibility = "visible";
+    document.getElementById("networkact").style.visibility = "visible";
+   
+    //Getting NFT p1
+    const options = { address: "0x65F931a0fE9231d26cF2471aD617D5473EC4B629", chain: "0x13881" };
+
+    //NFTget(options);
+
+
+  }
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+//ifLogged();
 
 //getting NFTS p2
-async function NFTget(options){
+async function NFTget(options) {
   let NFTs = await Moralis.Web3API.token.getNFTOwners(options)
   console.log(NFTs);
   let nftinfo = fetchNFT_new(NFTs.result);
   //console.log(nftinfo.result);
   //renderInv(nftinfo.result);
-  
+
 
 }
-function fetchNFT_new(NFTs){
- 
-  for (let i = 0; i < NFTs.length;i++) {
-      console.log("fetch function ");
-      let nft = NFTs[i];
-      let metad = nft.metadata
-      let metaparse = JSON.parse(metad);
-      console.log(metaparse);
-      renderInv(metaparse)
-     // let responsee = fetch(metad)
-     // .then (res => {console.log(res)});
+function fetchNFT_new(NFTs) {
+
+  for (let i = 0; i < NFTs.length; i++) {
+    console.log("fetch function ");
+    let nft = NFTs[i];
+    let metad = nft.metadata
+    let metaparse = JSON.parse(metad);
+    //console.log(metaparse);
+    renderInv(metaparse)
+    // let responsee = fetch(metad)
+    // .then (res => {console.log(res)});
 
   }
 }
@@ -90,9 +92,8 @@ function fetchNFT_new(NFTs){
 function loadJSON(path, success, error) {
   var xhr = new XMLHttpRequest();
   xhr.onreadystatechange = function () {
-    console.log(xhr.readyState);
-    if (xhr.readyState === 4)
-     {
+    //console.log(xhr.readyState);
+    if (xhr.readyState === 4) {
       if (xhr.status === 200) {
         success(JSON.parse(xhr.responseText));
       }
@@ -121,7 +122,7 @@ function loadJSON(path, success, error) {
 //       //.then( () => {return nft;});
 
 //   }
-  
+
 // }
 
 function renderInv(NFTs) {
@@ -136,13 +137,13 @@ function renderInv(NFTs) {
               <a href="${NFTs.image}" class="btn btn-primary">View File</a>
           </div>
   </div>`
-      let col = document.createElement("div")
-      col.className = "col col-md-3"
-      col.innerHTML = htmlString;
-      parent.appendChild(col);
+  let col = document.createElement("div")
+  col.className = "col col-md-3"
+  col.innerHTML = htmlString;
+  parent.appendChild(col);
 
 
- 
+
 }
 
 
@@ -154,103 +155,103 @@ function renderInv(NFTs) {
 
 async function uploadfile() {
 
-    const data = fileInput.files[0]
-    const file = new Moralis.File(data.name, data)
-    const fileExt = data.name.substring(data.name.indexOf(".") + 1);
-    const lowered = fileExt.toLowerCase();
+  const data = fileInput.files[0]
+  const file = new Moralis.File(data.name, data)
+  const fileExt = data.name.substring(data.name.indexOf(".") + 1);
+  const lowered = fileExt.toLowerCase();
 
-    if (lowered == "pdf" || fileExt == "png" || fileExt == "jpeg" || fileExt == "jpg" ){
+  if (lowered == "pdf" || fileExt == "png" || fileExt == "jpeg" || fileExt == "jpg") {
 
-      await file.saveIPFS();
-      document.getElementById("metadataName").value = data.name;
-      let fileHash = file.hash();
-      let fileUrl = file.ipfs();
-      console.log(file.ipfs(), file.hash(), data.name);
-      // if (fileExt == "pdf"){
-  
-  
-      // }
-      file.ipfs();
-      let metadata = 
-        {
-            name: document.getElementById("metadataName").value,
-            description: document.getElementById("metadataDescription").value,
-            image: fileUrl
-        }
-      const jsonFile = new Moralis.File("metadata.json", { base64: btoa(JSON.stringify(metadata))});
-      await jsonFile.saveIPFS();
-      let metadataHash = jsonFile.ipfs();
-      console.log(metadataHash);
-      console.log(jsonFile.ipfs());
-      const txt = await mintToken(metadataHash).then(notify)
+    await file.saveIPFS();
+    document.getElementById("metadataName").value = data.name;
+    let fileHash = file.hash();
+    let fileUrl = file.ipfs();
+    console.log(file.ipfs(), file.hash(), data.name);
+    // if (fileExt == "pdf"){
 
 
-
-
+    // }
+    file.ipfs();
+    let metadata =
+    {
+      name: document.getElementById("metadataName").value,
+      description: document.getElementById("metadataDescription").value,
+      image: fileUrl
     }
-    else {
-      
-        alert("File extension not supported!");
-    }
- 
-    
+    const jsonFile = new Moralis.File("metadata.json", { base64: btoa(JSON.stringify(metadata)) });
+    await jsonFile.saveIPFS();
+    let metadataHash = jsonFile.ipfs();
+    console.log(metadataHash);
+    console.log(jsonFile.ipfs());
+    const txt = await mintToken(metadataHash).then(notify)
+
+
+
+
+  }
+  else {
+
+    alert("File extension not supported!");
+  }
+
+
 }
 
-async function mintToken(_uri){
-    const encodedFunction = web3.eth.abi.encodeFunctionCall({
-      name: "mintToken",
-      type: "function",
-      inputs: [{
-        type: 'string',
-        name: 'tokenURI'
-        }]
-    }, [_uri]);
-  
-    const transactionParameters = {
-      to: nft_contract_address,
-      from: ethereum.selectedAddress,
-      data: encodedFunction
-    };
-    const txt = await ethereum.request({
-      method: 'eth_sendTransaction',
-      params: [transactionParameters]
-    });
-    return txt
-  }
-  
-  async function notify(_txt){
-    document.getElementById("resultSpace").innerHTML =  
+async function mintToken(_uri) {
+  const encodedFunction = web3.eth.abi.encodeFunctionCall({
+    name: "mintToken",
+    type: "function",
+    inputs: [{
+      type: 'string',
+      name: 'tokenURI'
+    }]
+  }, [_uri]);
+
+  const transactionParameters = {
+    to: nft_contract_address,
+    from: ethereum.selectedAddress,
+    data: encodedFunction
+  };
+  const txt = await ethereum.request({
+    method: 'eth_sendTransaction',
+    params: [transactionParameters]
+  });
+  return txt
+}
+
+async function notify(_txt) {
+  document.getElementById("resultSpace").innerHTML =
     `<input disabled = "true" id="result" type="text" class="form-control" placeholder="Description" aria-label="URL" aria-describedby="basic-addon1" value="Your NFT was minted in transaction ${_txt}">`;
-  } 
+}
 
 
 function handleAccountsChanged(accounts) {
-    if (accounts.length === 0) {
-     // MetaMask is locked or the user has not connected any accounts
-     console.log('Please connect to MetaMask.');
-    } else if (accounts[0] !== currentAccount) {
-      currentAccount = accounts[0];
-      // Do any other work!
-    }
+  if (accounts.length === 0) {
+    // MetaMask is locked or the user has not connected any accounts
+    console.log('Please connect to MetaMask.');
+  } else if (accounts[0] !== currentAccount) {
+    currentAccount = accounts[0];
+    // Do any other work!
   }
+}
 
 
-function logout_user() {
-    Moralis.User.logOut().then(function (user) {
-        const currentUser = Moralis.User.current();  // this will now be null
-        console.log('user logged out');
-        console.log(currentUser);
-        document.getElementById("btn-login").style.visibility = "visible";
-        document.getElementById("metadataName").innerText = " ";
-        document.getElementById("metadataName").style.visibility = "hidden";
-        document.getElementById("btn-logout").style.visibility = "hidden";
-        document.getElementById("btn-viewnft").style.visibility = "hidden";
-        document.getElementById("metadataDescription").style.visibility = "hidden";
-        document.getElementById("form").style.visibility = "hidden";
-        document.getElementById("nameFile").style.visibility = "hidden";
-        
+async function logout_user() {
+  await Moralis.User.logOut().then(function (user) {
+    user = Moralis.User.current();  // this will now be null
+    console.log('user logged out');
+    console.log(user);
+    document.getElementById("btn-login").style.visibility = "visible";
+    document.getElementById("metadataName").innerText = " ";
+    document.getElementById("metadataName").style.visibility = "hidden";
+    document.getElementById("btn-logout").style.visibility = "hidden";
+    document.getElementById("btn-viewnft").style.visibility = "hidden";
+    document.getElementById("metadataDescription").style.visibility = "hidden";
+    document.getElementById("form").style.visibility = "hidden";
+    document.getElementById("nameFile").style.visibility = "hidden";
 
-    });
+
+  });
 }
 
 //https://rinkeby.rarible.com/token/TOKEN_ADDRESS:TOKEN_ID
@@ -259,59 +260,59 @@ function logout_user() {
 
 checkWeb3();
 
-function displayMessage(messageType, message){
-    
-    messages = {
-        "00":`<div class= "alert alert-success"> ${message} </div>`,
-        "01":`<div class= "alert alert-danger"> ${message} </div>`
-    }
-    document.getElementById("resultSpace").innerHTML = messages[messageType];
+function displayMessage(messageType, message) {
+
+  messages = {
+    "00": `<div class= "alert alert-success"> ${message} </div>`,
+    "01": `<div class= "alert alert-danger"> ${message} </div>`
+  }
+  document.getElementById("resultSpace").innerHTML = messages[messageType];
 }
 
-async function checkWeb3(){
-    const ethereum = window.ethereum;
-    if(!ethereum || !ethereum.on) {
-        displayMessage("01", "This App Requires MetaMask, Please Install MetaMask");
-    }
-    else{
-        //displayMessage("00", "Metamask is Installed");
-        setWeb3Environment()
-    }
+async function checkWeb3() {
+  const ethereum = window.ethereum;
+  if (!ethereum || !ethereum.on) {
+    displayMessage("01", "This App Requires MetaMask, Please Install MetaMask");
+  }
+  else {
+    //displayMessage("00", "Metamask is Installed");
+    setWeb3Environment()
+  }
 }
 
-function setWeb3Environment(){
-    web3 = new Web3(window.ethereum);
-    getNetwork();
-    monitorNetwork();
+function setWeb3Environment() {
+  web3 = new Web3(window.ethereum);
+  getNetwork();
+  monitorNetwork();
 }
 
-async function getNetwork(){
-    chainID = await web3.eth.net.getId();
-    if (chainID == 80001){
-        displayMessage("00","Active network is "+ getNetworkName(chainID));
-    }
-    else {
-        displayMessage("01","Active network is "+ getNetworkName(chainID) + ", This network is currently not supported");
-        document.getElementById("btn-switch").style.visibility = "visible";
-        document.getElementById("btn-login").style.visibility = "hidden";
+async function getNetwork() {
+  let chainID = await web3.eth.net.getId();
+  if (chainID == 80001) {
+    displayMessage("00", "Active network is " + getNetworkName(chainID));
+  }
+  else {
+    displayMessage("01", "Active network is " + getNetworkName(chainID) + ", This network is currently not supported");
+    document.getElementById("btn-switch").style.visibility = "visible";
+    document.getElementById("btn-login").style.visibility = "hidden";
 
-    }
+  }
 }
 
-function getNetworkName(chainID){
-    networks = {
-        1:"Ethereum Mainnet",
-        4:"Ethereum Rinkeby",
-        97:"Binance Smart Chain Testnet",
-        80001:"Polygon Mumbai Testnet"
-    }
-    return networks[chainID];
+function getNetworkName(chainID) {
+  networks = {
+    1: "Ethereum Mainnet",
+    4: "Ethereum Rinkeby",
+    97: "Binance Smart Chain Testnet",
+    80001: "Polygon Mumbai Testnet"
+  }
+  return networks[chainID];
 }
 
-async function monitorNetwork(){
-    Moralis.onChainChanged(function(){
-        window.location.reload()
-    })
+async function monitorNetwork() {
+  Moralis.onChainChanged(function () {
+    window.location.reload()
+  })
 }
 
 
@@ -333,93 +334,90 @@ web3.eth.getAccounts(function(err, accounts){
 });
 
 
-function myfunction()
-{
- 
-    const chainIdHex = web3.currentProvider.chainId;
-    const chainIdDec =  web3.eth.net.getId();
-    console.log(chainIdHex);
-    console.log(chainIdDec);
-    try 
-    {
-         web3.currentProvider.request({
-          method: "wallet_switchEthereumChain",
-          params: [{ chainId: "0x13881" }]
-        });
-        
-      } catch (error) {
-        console.log("Page refershing ");
-        alert(error.message);
-      }
-      if (chainIdHex !== 0x13881) 
-      {
-        console.log("Page refershing 2 ");
-        try {  
-           web3.currentProvider.request({
-            method: "wallet_addEthereumChain",
-            params: [
-              {
-                chainId: "0x13881",
-                chainName: "Mumbai",
-                rpcUrls: ["https://rpc-mumbai.matic.today"],
-                nativeCurrency: {
-                  name: "Matic",
-                  symbol: "Matic",
-                  decimals: 18,
-                },
-                blockExplorerUrls: ["https://explorer-mumbai.maticvigil.com"],
-              },
-            ],
-          });
-          location.reload();
-        } catch (error) {
-          alert(error.message);
-        }
-      }
+function myfunction() {
+
+  const chainIdHex = web3.currentProvider.chainId;
+  const chainIdDec = web3.eth.net.getId();
+  console.log(chainIdHex);
+  console.log(chainIdDec);
+  try {
+    web3.currentProvider.request({
+      method: "wallet_switchEthereumChain",
+      params: [{ chainId: "0x13881" }]
+    });
+
+  } catch (error) {
+    console.log("Page refershing ");
+    alert(error.message);
+  }
+  if (chainIdHex !== 0x13881) {
+    console.log("Page refershing 2 ");
+    try {
+      web3.currentProvider.request({
+        method: "wallet_addEthereumChain",
+        params: [
+          {
+            chainId: "0x13881",
+            chainName: "Mumbai",
+            rpcUrls: ["https://rpc-mumbai.matic.today"],
+            nativeCurrency: {
+              name: "Matic",
+              symbol: "Matic",
+              decimals: 18,
+            },
+            blockExplorerUrls: ["https://explorer-mumbai.maticvigil.com"],
+          },
+        ],
+      });
+      location.reload();
+    } catch (error) {
+      alert(error.message);
+    }
+  }
 
 }
 
 
 
-    //Sessions 
-    async  function writeCookie(name,value,days) {
-      var date, expires;
-      if (days) {
-          date = new Date();
-          date.setTime(date.getTime()+(days*24*60*60*1000));
-          expires = "; expires=" + date.toGMTString();
-              }else{
-          expires = "";
-      }
-      document.cookie = name + "=" + value + expires + "; path=/";
+//Sessions 
+async function writeCookie(name, value, days) {
+  var date, expires;
+  if (days) {
+    date = new Date();
+    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+    expires = "; expires=" + date.toGMTString();
+  } else {
+    expires = "";
   }
+  document.cookie = name + "=" + value + expires + "; path=/";
+}
 
 async function readCookie(name) {
-      var i, c, ca, nameEQ = name + "=";
-      ca = document.cookie.split(';');
-      for(i=0;i < ca.length;i++) {
-          c = ca[i];
-          while (c.charAt(0)==' ') {
-              c = c.substring(1,c.length);
-          }
-          if (c.indexOf(nameEQ) == 0) {
-              return c.substring(nameEQ.length,c.length);
-          }
-      }
-      return '';
-  }
-function isEmpty(object) {
-      for (const property in object) {
-        return false;
-      }
-      return true;
+  var i, c, ca, nameEQ = name + "=";
+  ca = document.cookie.split(';');
+  for (i = 0; i < ca.length; i++) {
+    c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1, c.length);
     }
-async function sessionvalid(){
+    if (c.indexOf(nameEQ) == 0) {
+      return c.substring(nameEQ.length, c.length);
+    }
+  }
+  return '';
+}
+function isEmpty(object) {
+  for (const property in object) {
+    return false;
+  }
+  return true;
+}
+/*async function sessionvalid(){
       console.log("Wokring");
       //writeCookie('cUSER', currentUser, 3)
       res = readCookie('cUSER');
       res = isEmpty(res);
-      currentUser = readCookie('cUSER');
+      //currentUser = readCookie('cUSER');
       console.log(res);
       if (res == false){
           console.log('session valid console is working');
@@ -442,8 +440,9 @@ async function sessionvalid(){
   
   
   
-  }
+  }*/
 
 
-
-    
+document.getElementById("btn-login").onclick = login_metamask;
+document.getElementById("btn-logout").onclick = logout_user;
+export { NFTget, fetchNFT_new, renderInv, logout_user } 
