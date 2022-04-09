@@ -31,9 +31,18 @@
       padding: 20px;
     }
  
-
+    div#nav{
+  text-align: center;
+  }
     body {
-      font-family: Arial;
+      font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+    margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
     }
 
     /* Style the tab */
@@ -71,6 +80,10 @@
 
 <body style="background-color: rgb(119, 118, 118)" >
   <!--NAV BAR -->
+
+
+
+
   <nav class="navbar navbar-expand-sm navbar-dark bg-dark" style="padding-left: 2%">
     <a class="navbar-brand" href="#">MATIC</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
@@ -80,34 +93,40 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item active">
-          <a class="nav-link" href="index.html"><b>Home</b> <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item" id="register">
-          <a class="nav-link disabled" href="">Register</a>
+          <a class="nav-link" href="index.html"><b>Home</b><span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item" id="SwitchTest">
-          <a class="nav-link" href="about.html">About</a>
+          <a class="nav-link" href="about.html">Extra page/about</a>
         </li>
-        
-        <li class="nav-item" id="fileman" style="visibility:hidden">
+        <li class="nav-item" id="fileman">
           <a class="nav-link" href="test.html">File Managment</a>
         </li>
         <li class="nav-item" id="SwitchTest" style="visibility:hidden">
           <a class="nav-link" href="#">Switch Testnet</a>
         </li>
-        <li class="nav-item" id="SwitchTest">
-          <button class="nav-link" href="about.html">About</button>
-        </li>
+     
       </ul>
+    </div>
+    <div>
+      <ul>
+        <li class="nav-item" style="float: right" id="SwitchTest">
+          <button id="btn-login" class="btn btn-primary" style="visibility: visible;">Login With Metamask</button>
+          <button id="btn-switch" class="btn btn-warning" style="visibility: hidden;">Switch network</button>
+        </li>
+
+      </ul>
+
     </div>
 
   </nav>
-  <div id="resultSpace">
+ 
+
+  <div id="checkNetwork">
   </div>
 
   <noscript>You need to enable JavaScript to run this app.</noscript>
   <div id="root"></div>
-  <h1> You have the following files in your wallet  </h1>
+ 
   <div class="container" style="align: center">
     <div class="row" id="nftview"></div>
     
@@ -119,9 +138,10 @@
       style="width: 20%;" />
   </div>
   <div class="text-center">
-    <button id="btn-login" class="btn btn-primary">Login With Metamask</button>
-    <button id="btn-switch" class="btn btn-warning" style="visibility: hidden;" onclick="myfunction()">Switch network</button>
-  </div>
+    <!-- <button id="btn-login" class="btn btn-primary">Login With Metamask</button>
+    <button id="btn-switch" class="btn btn-warning" style="visibility: hidden;">Switch network</button>
+ -->
+  </div> 
 
 
   <div id="app" class="text-center">
@@ -132,7 +152,7 @@
       cols="20" roxws="3" style="visibility:hidden"> </textarea>
     <form id="form" onsubmit="return false" style="visibility: hidden">
       <input type="file" class="btn btn-primary" name="fileinput" id="fileInput"> <br><br>
-      <button name="fileinput" class="btn btn-secondary" id="fileinput" onclick="uploadfile()"> Upload file </button>
+      <button name="fileinput" class="btn btn-secondary" id="fileinput" > Upload file </button>
       <button id="btn-viewnft" class="btn btn-secondary" onclick="getNFTs()" style="visibility:hidden"> View NFT
       </button>
       <div id="successMessage"> </div>
@@ -144,7 +164,8 @@
     <div id="networkact" style="visibility:hidden">
       
     </div>
-
+    <div id="resultSpace">
+    </div>
 </body>
 <script type="module" src="app.js"></script>
 </html>

@@ -6,9 +6,7 @@ const nft_contract_address = "0x65F931a0fE9231d26cF2471aD617D5473EC4B629"
 let user = Moralis.User.current();
 console.log(user)
 if(user)
-{
-    document.getElementById("testP").innerHTML = "This is a test"
-    console.log(user)
+{    console.log(user)
        
         const options = { address: "0x65F931a0fE9231d26cF2471aD617D5473EC4B629", chain: "0x13881" };
 
