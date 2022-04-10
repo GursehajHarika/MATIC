@@ -55,21 +55,20 @@
         <li class="nav-item" id="SwitchTest">
           <a class="nav-link" href="about.html">About</a>
         </li>
-        <li class="nav-item active">
+        <li class="nav-item ">
           <a class="nav-link" href="index.html">Upload</a>
         </li>
-        <li class="nav-item" id="fileman">
+        <li class="nav-item active" id="fileman">
           <a class="nav-link" href="test.html"><b>File Management</b><span class="sr-only">(current)</span></a>
         </li>
-        <li class="nav-item" id="SwitchTest" style="visibility:hidden">
-          <a class="nav-link" href="#">Switch Testnet</a>
-        </li>
+
      
       </ul>
     </div>
     <div>
       <ul>
         <li class="nav-item" style="float: right" id="SwitchTest">
+             <button id="btn-logout" class="btn btn-primary" style="visibility:hidden">Logout</button>
           <button id="btn-login" class="btn btn-primary" style="visibility: visible;">Login With Metamask</button>
           <button id="btn-switch" class="btn btn-warning" style="visibility: hidden;">Switch network</button>
         </li>
@@ -103,7 +102,72 @@
       </div>
       
     </div>
+    
+<!-- Footer -->
+<footer class="text-center text-lg-start bg-light text-muted">
+  <br>
+  <div id="networkact" style="visibility:hidden">
+      
+  </div>
+  <!-- Section: Links  -->
+  <section class="">
+    <div class="container text-center text-md-start mt-5">
+      <!-- Grid row -->
+      <div class="row mt-3">
+        <!-- Grid column -->
+        <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+          <!-- Content -->
+          <h6 class="text-uppercase fw-bold mb-4">
+            <i class="fas fa-gem me-3"></i>Decenteralized File Manager
+          </h6>
+          <p>
+            Here you can use rows and columns to organize your footer content. Lorem ipsum
+            dolor sit amet, consectetur adipisicing elit.
+          </p>
+        </div>
 
+        
+
+        <!--FOOTER -->
+
+      
+        <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+      
+          <h6 class="text-uppercase fw-bold mb-4">
+            Useful links
+          </h6>
+          <p>
+            <a href="index.html" class="text-reset">Upload file</a>
+          </p>
+          <p>
+            <a href="test.html" class="text-reset">Manage Files</a>
+          </p>
+         
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+          <!-- Links -->
+          <h6 class="text-uppercase fw-bold mb-4">
+            Contact
+          </h6>
+          <p><i class="fas fa-home me-3"></i> house, dream 999, country</p>
+          <p>
+            <i class="fas fa-envelope me-3"></i>
+           test@test.com
+          </p>
+  
+        </div>
+        <!-- Grid column -->
+      </div>
+      <!-- Grid row -->
+    </div>
+  </section>
+  <!-- Section: Links  -->
+</footer>
+
+<!--FOOTER ENDS-->
 </body>
 <script type="module"  src="testApp.js"> </script>
 <div class="text-center">

@@ -10,13 +10,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#000000" />
   <meta name="description" content="Web site created using create-react-app" />
-  <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+  <link rel="apple-touch-icon" href="%PUBLIC_URL%/images/MATIC-2.jpg" />
   <!-- Moralis SDK code -->
   <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
   <script src="https://unpkg.com/moralis/dist/moralis.js"></script>
   <title>File System MATIC</title>
   <!-- Font Awesome -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet" />
+
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
   <!-- MDB -->
@@ -85,13 +86,21 @@
 
 
   <nav class="navbar navbar-expand-sm navbar-dark bg-dark" style="padding-left: 2%">
+
+    <div class="collapse" id="navbarnav">
+      <div class="bg-dark p-4">
+        <h5 class="text-white h4">Collapsed content</h5>
+        <span class="text-muted">Toggleable via the navbar brand.</span>
+      </div>
+    </div>
+
     <a class="navbar-brand" href="/">
       <div class="logo-image">
         <img src="/images/MATIC-2-removebg-preview.png" class="img-fluid" width = "50%">
   </div>
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      aria-controls="navbarNav" data-bs-target="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
@@ -99,21 +108,20 @@
         <li class="nav-item" id="SwitchTest">
           <a class="nav-link" href="about.html">About</a>
         </li>
-        <li class="nav-item active">
+        <li class="nav-item active" id="Upload">
           <a class="nav-link" href="index.html"><b>Upload</b><span class="sr-only">(current)</span></a>
         </li>
-        <li class="nav-item" id="fileman">
+        <li class="nav-item" id="fileman" style="visibility: hidden;">
           <a class="nav-link" href="test.html">File Managment</a>
         </li>
-        <li class="nav-item" id="SwitchTest" style="visibility:hidden">
-          <a class="nav-link" href="#">Switch Testnet</a>
-        </li>
+
      
       </ul>
     </div>
-    <div>
+    <div >
       <ul>
         <li class="nav-item" style="float: right" id="SwitchTest">
+          <button id="btn-logout" class="btn btn-primary" style="visibility:hidden">Logout</button>
           <button id="btn-login" class="btn btn-primary" style="visibility: visible;">Login With Metamask</button>
           <button id="btn-switch" class="btn btn-warning" style="visibility: hidden;">Switch network</button>
         </li>
@@ -138,27 +146,134 @@
   <br>
 
   <div id="app" class="text-center">
-    <p type="text" name="metadataName" id="metadataName" style="visibility:hidden"> </p>
-    <input type="text" name="fileinput" id="nameFile" placeholder="Name" style="visibility:hidden"> <br>
 
-    <textarea name="metadataDescription" id="metadataDescription" placeholder="Note/ description for your image"
-      cols="20" roxws="3" style="visibility:hidden"> </textarea>
+
+ 
+
+
+
+    <p type="text" name="metadataName" id="metadataName" style="visibility:hidden"> </p>
+    <!-- <input type="text" name="fileinput" id="nameFile" placeholder="Name" style="visibility:hidden"> <br> -->
+
+    <!-- <textarea name="metadataDescription" id="metadataDescription" placeholder="Note/ description for your image" 
+      cols="20" roxws="3" style="visibility:hidden"> </textarea>-->
     <form id="form" onsubmit="return false" style="visibility: hidden">
-      <input type="file" class="btn btn-primary" name="fileinput" id="fileInput"> <br><br>
+
+
+      <div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3 justify-content-md-center" >
+
+        <div class=" mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center  overflow-hidden">
+          <p type="text" name="metadataName" id="metadataName" style="visibility:hidden"> </p>
+          <input type="text" class="form-control" id="nameFile" aria-describedby="Filename" placeholder="Enter file name" style="visibility: hidden;">
+          <input type="text" class="form-control" id="metadataDescription" aria-describedby="metadataDescription" placeholder="Enter description" style="visibility: hidden;">
+  
+        </div>
+        <div class=" mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center  overflow-hidden">
+        <div class="mb-3">
+          <input class="form-control" type="file" id="fileInput">
+        </div>
+        <button name="fileinput" class="btn btn-secondary" id="fileinput" > Upload file </button>
+        <button id="btn-viewnft" class="btn btn-secondary" onclick="getNFTs()" style="visibility:hidden"> View NFT
+        </button>
+        <div id="successMessage">
+        </div>
+        <div id="networkact" style="visibility:hidden">
+        
+        </div>
+          </div>
+      </div>
+      
+  
+
+
+
+
+
+      <!-- <input type="file" class="btn btn-primary" name="fileinput" id="fileInput"> <br><br>
+      <div class="mb-3">
+        <input class="form-control" type="file" id="formFile">
+      </div>
       <button name="fileinput" class="btn btn-secondary" id="fileinput" > Upload file </button>
       <button id="btn-viewnft" class="btn btn-secondary" onclick="getNFTs()" style="visibility:hidden"> View NFT
       </button>
-      <div id="successMessage"> </div>
+      <div id="successMessage"> </div> -->
       <br><br>
     </form>
     <div class="text-center">
-      <button id="btn-logout" class="btn btn-primary" style="visibility:hidden">Logout</button>
+   
     </div>
     <div id="networkact" style="visibility:hidden">
       
     </div>
     <div id="resultSpace">
     </div>
+
+    
+<!-- Footer -->
+<footer class="text-center text-lg-start bg-light text-muted">
+  <br>
+  <div id="networkact" style="visibility:hidden">
+      
+  </div>
+  <!-- Section: Links  -->
+  <section class="">
+    <div class="container text-center text-md-start mt-5">
+      <!-- Grid row -->
+      <div class="row mt-3">
+        <!-- Grid column -->
+        <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+          <!-- Content -->
+          <h6 class="text-uppercase fw-bold mb-4">
+            <i class="fas fa-gem me-3"></i>Decenteralized File Manager
+          </h6>
+          <p>
+            Here you can use rows and columns to organize your footer content. Lorem ipsum
+            dolor sit amet, consectetur adipisicing elit.
+          </p>
+        </div>
+
+        
+
+        <!--FOOTER -->
+
+      
+        <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+      
+          <h6 class="text-uppercase fw-bold mb-4">
+            Useful links
+          </h6>
+          <p>
+            <a href="index.html" class="text-reset">Upload file</a>
+          </p>
+          <p>
+            <a href="test.html" class="text-reset">Manage Files</a>
+          </p>
+         
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+          <!-- Links -->
+          <h6 class="text-uppercase fw-bold mb-4">
+            Contact
+          </h6>
+          <p><i class="fas fa-home me-3"></i> house, dream 999, country</p>
+          <p>
+            <i class="fas fa-envelope me-3"></i>
+           test@test.com
+          </p>
+  
+        </div>
+        <!-- Grid column -->
+      </div>
+      <!-- Grid row -->
+    </div>
+  </section>
+  <!-- Section: Links  -->
+</footer>
+
+<!--FOOTER ENDS-->
 </body>
 <script type="module" src="app.js"></script>
 </html>

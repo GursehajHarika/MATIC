@@ -32,6 +32,7 @@ async function login_metamask() {
     document.getElementById("SwitchTest").style.visibility = "visible";
     document.getElementById("fileman").style.visibility = "visible";
     document.getElementById("networkact").style.visibility = "visible";
+
    
     //Getting NFT p1
     const options = { address: "0x65F931a0fE9231d26cF2471aD617D5473EC4B629", chain: "0x13881" };
@@ -58,6 +59,7 @@ async function login_metamask() {
     const options = { address: "0x65F931a0fE9231d26cF2471aD617D5473EC4B629", chain: "0x13881" };
 
   }
+
   console.log("USER ouside if " + user) ;
 }
 
@@ -114,7 +116,7 @@ function renderInv(NFTs) {
   if (fileExt == "pdf"){
     console.log("PDF detected");
     let htmlString = `
-        <div class="card">
+        <div class="card" style="padding-top: 5%;">
             <img class="card-img-top-img-fluid" alt="Responsive image" src="https://anpbvyeqfhl5.usemoralis.com/images/MATIC-2.png">
                 <div class="card-body">
                     <h5 class="card-title">${NFTs.name}</h5>
@@ -130,13 +132,13 @@ function renderInv(NFTs) {
   }
   else {
   let htmlString = `
-  <div class="card">
+  <div class="card" style="padding-top: 5%;">
       <img class="card-img-top" src="${NFTs.image}" alt="Card image cap">
           <div class="card-body">
               <h5 class="card-title">${NFTs.name}</h5>
               <p class="card-text">${NFTs.description}</p>
               <a href="${NFTs.image}" class="btn btn-primary">View File</a>
-              <a href="${NFTs.image}" class="btn btn-primary">Delete</a>
+
           </div>
   </div>`
       let col = document.createElement("div")

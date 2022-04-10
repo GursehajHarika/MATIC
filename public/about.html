@@ -16,6 +16,8 @@
   <title>File System MATIC</title>
   <!-- Font Awesome -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet" />
+
+
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
   <!-- MDB -->
@@ -53,10 +55,24 @@ html {
   background-color: #626877;
   color: white;
 }
-
+.container {
+  max-width: 960px;
+}
 .container {
   padding: 0 16px;
 }
+
+.featurette-divider {
+  margin: 5rem 0;
+}
+
+
+.featurette-heading {
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -.05rem;
+}
+
 
 .container::after, .row::after {
   content: "";
@@ -74,12 +90,34 @@ html {
     display: block;
   }
 }
+@media (min-width: 40em) {
+  /* Bump up size of carousel content */
+  .carousel-caption p {
+    margin-bottom: 1.25rem;
+    font-size: 1.25rem;
+    line-height: 1.4;
+  }
+
+  .featurette-heading {
+    font-size: 50px;
+  }
+}
+
+@media (min-width: 62em) {
+  .featurette-heading {
+    margin-top: 7rem;
+  }
+}
+
     
   </style>
 </head>
 
 <body style="background-color: rgb(255, 255, 255)">
   <!--NAV BAR -->
+
+
+  
   <nav class="navbar navbar-expand-sm navbar-dark bg-dark" style="padding-left: 2%">
     <a class="navbar-brand" href="/">
       <div class="logo-image">
@@ -91,25 +129,24 @@ html {
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
-        <li class="nav-item" id="SwitchTest">
-          <a class="nav-link" href="about.html"><b>About</b><span class="sr-only">(current)</span></a>
+      <ul class="navbar-nav justify-content-md-center">
+        <li class="nav-item active" id="SwitchTest">
+          <a class="nav-link" href="about.html">About<span class="sr-only">(current)</span></a>
         </li>
-        <li class="nav-item active">
+        <li class="nav-item">
           <a class="nav-link" href="index.html">Upload</a>
         </li>
         <li class="nav-item" id="fileman">
           <a class="nav-link" href="test.html">File Managment</a>
         </li>
-        <li class="nav-item" id="SwitchTest" style="visibility:hidden">
-          <a class="nav-link" href="#">Switch Testnet</a>
-        </li>
+
      
       </ul>
     </div>
     <div>
       <ul>
         <li class="nav-item" style="float: right" id="SwitchTest">
+          <button id="btn-logout" class="btn btn-primary" style="visibility:hidden">Logout</button>
           <button id="btn-login" class="btn btn-primary" style="visibility: visible;">Login With Metamask</button>
           <button id="btn-switch" class="btn btn-warning" style="visibility: hidden;">Switch network</button>
         </li>
@@ -121,7 +158,185 @@ html {
   </nav>
 
   <noscript>You need to enable JavaScript to run this app.</noscript>
-  <div class="about-section">
+  <div id="checkNetwork" style="visibility: hidden;">
+  </div>
+  <div class="container" style="align: center; visibility: hidden;">
+    <div class="row" id="nftview"></div>
+    
+
+
+    
+  </div>
+  <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">Meet the Brains behind this Project</h1>
+  </div>
+
+
+  <div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
+    <div class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
+      <div class="my-3 py-3">
+        <img src="/images/1601645303454.jfif" alt="Gursehaj Harika" style="width:85%; padding-bottom: 5%;">
+        <h2 class="display-5">Gursehaj Harika </h2>
+        <h3 class="display-7">Founder</h3>
+        <p class="lead">Gursehaj is a 4th year B.Tech student at McMaster University. He has a strong background in software development with over 3 years of front and back end development. He has experience with technologies such as Docker, ReactJS, Moralis and other 
+          development tools.</p>
+          <p>EMAIL : harikag@mcmaster.ca</p>
+        </div>
+ 
+    </div>
+    <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
+      <div class="my-3 p-3">
+        <img src="/images/1632176996090.jfif" alt="Jonathan Duong" style="width:100%; padding-bottom: 5%;">
+        <h2 class="display-5">Jonathan Duong</h2>
+        <h3 class="display-7">Founder</h3>
+        <p class="lead"> Jonathan is a 4th year B.Tech student at McMaster University. He has a strong background in AI/ML but helped develop the front end and smart contract for this project. Jonathan has worked with Python, ReactJS, HTML/CSS and other technologies.</p>
+        <p>EMAIL : duongj14@mcmaster.ca</p>
+      </div>
+    </div>
+    <div class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
+      <div class="my-3 py-3">
+        <img src="/images/1625279838908.jfif" alt="Kogul Balasubramaniam" style="width:90%; padding-bottom: 5%;">
+        <h2 class="display-5">Kogul Balasubramaniam</h2>
+        <h3 class="display-7">Founder</h3>
+        <p class="lead">Kogul is a 4th year B.Tech student at McMaster University. Kogul developed the Arduino code of a telemetry system which insight into the health of the vehicle when under high load. Kogul has worked with ReactJS, HTML/CSS, Python and other technologies.</p>
+        <p>EMAIL : balask4@mcmaster.ca</p>
+      </div>
+    </div>
+  
+  
+  </div>
+
+
+  <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
+    <div class="col-md-5 p-lg-5 mx-auto my-5">
+      <h1 class="display-4 font-weight-normal">Use case</h1>
+      <p class="lead font-weight-normal">Imagine selling a car on Kijiji or Facebook Marketplace, after agreeing with the buyer on how much they should pay you, the next step is to transfer ownership to the new owner. This is usually done by visiting a governing 
+        body which issues and regualtes motor vehicles in your area, in Ontario this can be completed by visiting Service Ontario.
+      </p>
+    </div>
+    <div class="product-device box-shadow d-none d-md-block"></div>
+    <div class="product-device product-device-2 box-shadow d-none d-md-block"></div>
+  </div>
+
+
+
+  <!--Featurette-->
+  <div class="container marketing">
+      <hr class="featurette-divider">
+      <div class="row featurette">
+        <div class="col-md-7">
+          <h2 class="featurette-heading"> <span class="text-muted">Benefits.</span></h2>
+          <p class="lead">All this sounds relatively normal and is how articles of ownership have been transacted for decades. However, there are a few flaws with this methodology. The first is receiving payment. In the event that one party does not want to pay the agreed amount there is no easy way of stopping the transaction. This is handled wihtin the smart contract. Smart contracts will disallow the transaction if one or both parties do not hold their end of the bargin. 
+
+            The second benefit is an increased level of reliability and speed. Users will no longer need to visit a physical location and are able to transact almost instantly. </p>
+          </div>
+        <div class="col-md-5">
+          <img class="featurette-image img-fluid mx-auto" src="images/benefits.png" style="width: 100%; padding-top: 35%;" alt="Generic placeholder image">
+        </div>
+      </div>
+
+        <hr class="featurette-divider">
+
+        <div class="row featurette">
+          <div class="col-md-7 order-md-2">
+            <h2 class="featurette-heading">NFT... <br> <span class="text-muted">Now whats that?</span></h2>
+            <p class="lead">the main idea behind an NFT or Non-Fungible-Token is the idea that users can undeniably prove that this user owns this specific NFT and that it has not been modified in anyway shape or form. Ideally, a governing body like the Ministry of Transportation (MTO) would issue NFT's to all motor vehicle owners. Users would then be able to check that this NFT was issued by the MTO and any user that would want to sell their car would be able to without the need of a third-party's approval. </p>
+          </div>
+          <div class="col-md-5 order-md-1">
+            <img class="featurette-image img-fluid mx-auto" src="images/NFTimage.jpeg" style="width: 100%; padding-top: 40%;" alt="Generic placeholder image">
+          </div>
+        </div>
+
+        <hr class="featurette-divider">
+
+      
+        <div class="row featurette">
+          <div class="col-md-7">
+            <h2 class="featurette-heading">So What is<br> <span class="text-muted">MATIC File System?</span></h2>
+            <p class="lead">Matic File System allows users to transact digital documents by creating an NFT every time a file is uploaded. All files are uploaded to IPFS which is a decentralized file storage system. After succesfully uploading, metadata is extracted to be used for the NFT. After charging the user a small amount in gas fees and service fees the user is issued an NFT, digitally proving that they are the owner of the file.
+            </p>
+          </div>
+          <div class="col-md-5">
+            <img classs="featurette-image img-fluid mx-auto" src= "images/polygon.jpg" style="width: 100%; padding-top: 40%;">
+          </div>
+        </div>
+
+        <hr class="featurette-divider">
+
+
+</div>
+
+<!-- Footer -->
+<footer class="text-center text-lg-start bg-light text-muted">
+  <br>
+  <div id="networkact" style="visibility:hidden">
+      
+  </div>
+  <!-- Section: Links  -->
+  <section class="">
+    <div class="container text-center text-md-start mt-5">
+      <!-- Grid row -->
+      <div class="row mt-3">
+        <!-- Grid column -->
+        <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+          <!-- Content -->
+          <h6 class="text-uppercase fw-bold mb-4">
+            <i class="fas fa-gem me-3"></i>Decenteralized File Manager
+          </h6>
+          <p>
+            Here you can use rows and columns to organize your footer content. Lorem ipsum
+            dolor sit amet, consectetur adipisicing elit.
+          </p>
+        </div>
+
+        
+
+        <!--FOOTER -->
+
+      
+        <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+      
+          <h6 class="text-uppercase fw-bold mb-4">
+            Useful links
+          </h6>
+          <p>
+            <a href="index.html" class="text-reset">Upload file</a>
+          </p>
+          <p>
+            <a href="test.html" class="text-reset">Manage Files</a>
+          </p>
+         
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+          <!-- Links -->
+          <h6 class="text-uppercase fw-bold mb-4">
+            Contact
+          </h6>
+          <p><i class="fas fa-home me-3"></i> house, dream 999, country</p>
+          <p>
+            <i class="fas fa-envelope me-3"></i>
+           test@test.com
+          </p>
+  
+        </div>
+        <!-- Grid column -->
+      </div>
+      <!-- Grid row -->
+    </div>
+  </section>
+  <!-- Section: Links  -->
+</footer>
+
+<!--FOOTER ENDS-->
+
+
+
+
+
+<!--  <div class="about-section">
     <h3 style="padding-left: 30px">Use case?</h3>
     <p style="padding-left: 30px">Imagine selling a car on Kijiji or Facebook Marketplace, after agreeing with the buyer on how much they should pay you, the next step is to transfer ownership to the new owner. This is usually done by visiting a governing 
       body which issues and regualtes motor vehicles in your area, in Ontario this can be completed by visiting Service Ontario.</p>
@@ -152,7 +367,7 @@ html {
         <div class="container">
           <h2>Gursehaj Harika</h2>
           <p class="title">Founder</p>
-          <p>Gursehaj is a 4th year B.Tech student at McMaster University. He has a strong background in software development with over 3 years of front and back end development. He has experience with technologies such as Docker, ReactJS, Moralis and other 
+          <p>Gursehaj is a 4th year B.Tech student at McMaster University. He has a strong background in software development with over 3 years of front and back end development. He has experience with technologies such as Docker, Mocha, ReactJS, Moralis and other 
             development tools.
           </p>
           <p>harikag@mcmaster.ca</p>
@@ -184,6 +399,10 @@ html {
       </div>
     </div>
   </div>
+-->
+
+
+
 </body>
 <script type="module" src="app.js"></script>
 </html>
