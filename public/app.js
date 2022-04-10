@@ -65,6 +65,7 @@ async function login_metamask() {
 async function NFTget(options) {
   let NFTs = await Moralis.Web3API.token.getNFTOwners(options)
   console.log(NFTs);
+  document.getElementById("btn-login").style.visibility = "hidden";
   let nftinfo = fetchNFT_new(NFTs.result);
 
 }
@@ -104,22 +105,47 @@ function fetchNFT_new(NFTs){
 
 function renderInv(NFTs) {
   const parent = document.getElementById("nftview")
+
+  
+
+
+  const fileExt = NFTs.name.substring(NFTs.name.indexOf(".") + 1);
+  console.log(fileExt);
+  if (fileExt == "pdf"){
+    console.log("PDF detected");
+    let htmlString = `
+        <div class="card">
+            <img class="card-img-top-img-fluid" alt="Responsive image" src="https://anpbvyeqfhl5.usemoralis.com/images/MATIC-2.png">
+                <div class="card-body">
+                    <h5 class="card-title">${NFTs.name}</h5>
+                    <p class="card-text">${NFTs.description}</p>
+                    <a href="${NFTs.image}" class="btn btn-primary">Details</a>
+                </div>
+        </div>`
+      let col = document.createElement("div")
+      col.className = "col col-md-3"
+      col.innerHTML = htmlString;
+      parent.appendChild(col);
+
+  }
+  else {
   let htmlString = `
   <div class="card">
       <img class="card-img-top" src="${NFTs.image}" alt="Card image cap">
           <div class="card-body">
               <h5 class="card-title">${NFTs.name}</h5>
               <p class="card-text">${NFTs.description}</p>
-              <a target="_blank" href="${NFTs.image}" class="btn btn-primary">View File</a>
+              <a href="${NFTs.image}" class="btn btn-primary">View File</a>
+              <a href="${NFTs.image}" class="btn btn-primary">Delete</a>
           </div>
   </div>`
-  let col = document.createElement("div")
-  col.className = "col col-md-3"
-  col.innerHTML = htmlString;
-  parent.appendChild(col);
+      let col = document.createElement("div")
+      col.className = "col col-md-3"
+      col.innerHTML = htmlString;
+      parent.appendChild(col);
+  }
 
-
-
+ 
 }
 
 
@@ -186,6 +212,10 @@ async function mintToken(_uri) {
 async function notify(_txt) {
   document.getElementById("resultSpace").innerHTML =
     `<input disabled = "true" id="result" type="text" class="form-control" placeholder="Description" aria-label="URL" aria-describedby="basic-addon1" value="Your NFT was minted in transaction ${_txt}">`;
+}
+
+function retrunScanAddress(_txt) {
+
 }
 
 function handleAccountsChanged(accounts) {

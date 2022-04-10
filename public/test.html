@@ -56,10 +56,10 @@
           <a class="nav-link" href="about.html">About</a>
         </li>
         <li class="nav-item active">
-          <a class="nav-link" href="index.html"><b>Upload</b><span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="index.html">Upload</a>
         </li>
         <li class="nav-item" id="fileman">
-          <a class="nav-link" href="test.html">File Managment</a>
+          <a class="nav-link" href="test.html"><b>File Management</b><span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item" id="SwitchTest" style="visibility:hidden">
           <a class="nav-link" href="#">Switch Testnet</a>
@@ -92,22 +92,11 @@
   <noscript>You need to enable JavaScript to run this app.</noscript>
   <div id="root"></div>
 
-
-  <div id = "Logo" class="text-center" >
-    <img src="https://github.com/GursehajHarika/MATIC/blob/Prototype/public/images/MATIC.png?raw=true" style="width: 20%;"/>
-  </div>
-  <div class="text-center">
-    <button id="btn-login" class="btn btn-primary" style="visibility: hidden;">Login With Metamask</button>
-    <button id="btn-switch" class="btn btn-warning" style = "visibility: hidden;" onclick="myfunction()">Switch network</button>
-    <button name="fileinput" class="btn btn-secondary" id="fileinput" style="visibility: hidden;" > Upload file </button>
-
-  </div>
-
   <div id="app" class="text-center">
      <div class="text-center">
       <button id="btn-logout" class="btn btn-primary" style="visibility:hidden">Logout</button>
     </div>
-<h1> You have the following files in your wallet  </h1>
+<h3> You have the following files in your wallet  </h3>
     <div class="container" style="align: center">
       <div class="row" id="nftview">
         <p id="testP"> </p>
@@ -115,8 +104,11 @@
       
     </div>
 
-
-    
 </body>
 <script type="module"  src="testApp.js"> </script>
+<div class="text-center">
+  <button id="btn-login" class="btn btn-primary" style="visibility: hidden;">Login With Metamask</button>
+  <button id="btn-switch" class="btn btn-warning" style = "visibility: hidden;" onclick="myfunction()">Switch network</button>
+  <button name="fileinput" class="btn btn-secondary" id="fileinput" style="visibility: hidden;" > Upload file </button>
+</div>
 </html>

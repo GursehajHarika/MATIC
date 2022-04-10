@@ -24,4 +24,9 @@ contract MyNFT is ERC721URIStorage {
 
         return newItemId;
     }
+
+        function _burn(uint256 tokenId) internal virtual override(ERC721, ERC721URIStorage)
+    {
+        super._burn(tokenId);
+    }
 }
