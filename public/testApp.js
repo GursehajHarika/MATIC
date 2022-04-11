@@ -9,10 +9,9 @@ if(user)
 {    console.log(user)
        
         const options = { address: "0x65F931a0fE9231d26cF2471aD617D5473EC4B629", chain: "0x13881" };
-
+        document.getElementById("btn-logout").style.visibility = "visible";
         NFTget(options);
 }
-
 
 async function login_metamask() {
     console.log()
@@ -60,7 +59,7 @@ async function login_metamask() {
       document.getElementById("btn-logout").style.visibility = "hidden";
       
     });
-    //window.location.reload();
+    window.location.reload();
   }
 
 document.getElementById("btn-logout").onclick = logout_user;
