@@ -214,11 +214,8 @@ async function mintToken(_uri) {
 async function notify(_txt) {
   document.getElementById("resultSpace").innerHTML =
     `<input disabled = "true" id="result" type="text" class="form-control" placeholder="Description" aria-label="URL" aria-describedby="basic-addon1" value="Your NFT was minted in transaction ${_txt}">`;
-}
-
-function retrunScanAddress(_txt) {
-
-}
+      console.log(_txt)
+  }
 
 function handleAccountsChanged(accounts) {
   if (accounts.length === 0) {
@@ -367,4 +364,4 @@ document.getElementById("btn-logout").onclick = logout_user;
 document.getElementById("fileinput").onclick = uploadfile;
 
 document.getElementById("btn-switch").onclick = myfunction;
-export { NFTget, fetchNFT_new, renderInv, logout_user } 
+export { NFTget, fetchNFT_new, renderInv} 
