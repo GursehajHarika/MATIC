@@ -24,7 +24,6 @@ async function login_metamask() {
     document.getElementById("metadataName").innerText = "User logged in via wallet : " + user.get('ethAddress');
     document.getElementById("metadataName").style.visibility = "visible";
     document.getElementById("btn-logout").style.visibility = "visible";
-    document.getElementById("btn-viewnft").style.visibility = "visible";
     document.getElementById("btn-login").style.visibility = "hidden";
     document.getElementById("metadataDescription").style.visibility = "visible";
     document.getElementById("form").style.visibility = "visible";
@@ -46,7 +45,6 @@ async function login_metamask() {
     document.getElementById("metadataName").innerText = "User logged in via wallet : " + user.get('ethAddress');
     document.getElementById("metadataName").style.visibility = "visible";
     document.getElementById("btn-logout").style.visibility = "visible";
-    document.getElementById("btn-viewnft").style.visibility = "visible";
     document.getElementById("btn-login").style.visibility = "hidden";
     document.getElementById("metadataDescription").style.visibility = "visible";
     document.getElementById("form").style.visibility = "visible";
